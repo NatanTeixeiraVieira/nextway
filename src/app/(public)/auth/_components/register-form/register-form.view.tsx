@@ -1,12 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Link from 'next/link';
-import type { useLoginForm } from './login-form.model';
+import type { usRegisterForm } from './register-form.model';
 
-type LoginFormViewProps = ReturnType<typeof useLoginForm>;
+type RegisterFormViewProps = ReturnType<typeof usRegisterForm>;
 
-export default function LoginFormView(props: LoginFormViewProps) {
+export default function RegisterFormView(props: RegisterFormViewProps) {
 	const {
 		errors,
 		passwordInputType,
@@ -18,6 +17,16 @@ export default function LoginFormView(props: LoginFormViewProps) {
 
 	return (
 		<form onSubmit={handleSubmit} className="w-full space-y-6">
+			<div className="space-y-2">
+				<Label htmlFor="name">Name</Label>
+				<Input
+					id="name"
+					type="text"
+					placeholder="Digite seu nome"
+					{...register('name')}
+					helperText={errors.name?.message}
+				/>
+			</div>
 			<div className="space-y-2">
 				<Label htmlFor="email">Email</Label>
 				<Input
@@ -40,14 +49,6 @@ export default function LoginFormView(props: LoginFormViewProps) {
 					isEyeOpen={passwordInputType === 'password'}
 					helperText={errors.password?.message}
 				/>
-			</div>
-			<div className="flex items-center justify-between">
-				<Link
-					href="/forgot-password"
-					className="text-sky-700 text-sm transition-colors hover:text-sky-600"
-				>
-					Esqueceu a sua senha?
-				</Link>
 			</div>
 			<Button
 				type="submit"

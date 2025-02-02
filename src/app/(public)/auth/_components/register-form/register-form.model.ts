@@ -1,18 +1,18 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { usePasswordInput } from '../../hooks/use-password-input';
-import { loginFormSchema } from './schemas/login-form.schema';
-import type { LoginFormData } from './types/login-form-data';
+import { registerFormSchema } from './schemas/register-form.schema';
+import type { RegisterFormData } from './types/login-form-data';
 
-export const useLoginForm = () => {
+export const usRegisterForm = () => {
 	const {
 		register,
 		handleSubmit: submit,
 		formState: { errors, dirtyFields },
-	} = useForm<LoginFormData>({
-		resolver: zodResolver(loginFormSchema),
+	} = useForm<RegisterFormData>({
+		resolver: zodResolver(registerFormSchema),
 		defaultValues: {
+			name: '',
 			email: '',
 			password: '',
 		},
@@ -20,13 +20,8 @@ export const useLoginForm = () => {
 
 	const { passwordInputType, handleIconEyeClick } = usePasswordInput();
 
-	const router = useRouter();
-
-	const handleSubmit = submit(async ({ email, password }) => {
-		console.log('🚀 ~ handleSubmit ~ email, password:', email, password);
-
+	const handleSubmit = submit(async ({ name, email, password }) => {
 		await new Promise((resolve) => setTimeout(resolve, 1000));
-		// router.push('/dashboard');
 	});
 
 	return {
