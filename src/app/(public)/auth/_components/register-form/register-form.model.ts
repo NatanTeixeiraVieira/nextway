@@ -2,9 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { usePasswordInput } from '../../hooks/use-password-input';
 import { registerFormSchema } from './schemas/register-form.schema';
-import type { RegisterFormData } from './types/login-form-data';
+import type { RegisterFormData } from './types/register-form-data';
 
-export const usRegisterForm = () => {
+export const useRegisterForm = () => {
 	const {
 		register,
 		handleSubmit: submit,
@@ -15,19 +15,24 @@ export const usRegisterForm = () => {
 			name: '',
 			email: '',
 			password: '',
+			confirmPassword: '',
 		},
 	});
 
 	const { passwordInputType, handleIconEyeClick } = usePasswordInput();
+	const {
+		passwordInputType: confirmPasswordInputType,
+		handleIconEyeClick: handleConfirmPasswordIconEyeClick,
+	} = usePasswordInput();
 
-	const handleSubmit = submit(async ({ name, email, password }) => {
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-	});
+	const handleSubmit = submit(async ({ name, email, password }) => {});
 
 	return {
 		errors,
 		passwordInputType,
 		dirtyFields,
+		confirmPasswordInputType,
+		handleConfirmPasswordIconEyeClick,
 		register,
 		handleSubmit,
 		handleIconEyeClick,

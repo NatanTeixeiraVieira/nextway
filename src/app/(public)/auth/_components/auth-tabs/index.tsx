@@ -22,10 +22,10 @@ export default function AuthTabs() {
 					active={activeTab === 'register'}
 					onClick={() => setActiveTab('register')}
 				>
-					Register
+					Cadastro
 				</TabButton>
 			</div>
-			<CardContent className="relative h-[28rem] overflow-hidden">
+			<CardContent className="min-h-[30rem] overflow-hidden">
 				<AnimatePresence mode="wait">
 					<motion.div
 						key={activeTab}
@@ -33,7 +33,7 @@ export default function AuthTabs() {
 						animate={{ opacity: 1, x: 0 }}
 						exit={{ opacity: 0, x: -20 }}
 						transition={{ duration: 0.2 }}
-						className="absolute inset-0 flex items-center p-6"
+						className=" inset-0 flex p-6"
 					>
 						{activeTab === 'login' ? <LoginForm /> : <RegisterForm />}
 					</motion.div>

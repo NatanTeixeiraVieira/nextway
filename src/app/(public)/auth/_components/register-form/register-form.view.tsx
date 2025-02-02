@@ -1,15 +1,17 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import type { usRegisterForm } from './register-form.model';
+import type { useRegisterForm } from './register-form.model';
 
-type RegisterFormViewProps = ReturnType<typeof usRegisterForm>;
+type RegisterFormViewProps = ReturnType<typeof useRegisterForm>;
 
 export default function RegisterFormView(props: RegisterFormViewProps) {
 	const {
 		errors,
 		passwordInputType,
 		dirtyFields,
+		confirmPasswordInputType,
+		handleConfirmPasswordIconEyeClick,
 		handleSubmit,
 		register,
 		handleIconEyeClick,
@@ -18,7 +20,7 @@ export default function RegisterFormView(props: RegisterFormViewProps) {
 	return (
 		<form onSubmit={handleSubmit} className="w-full space-y-6">
 			<div className="space-y-2">
-				<Label htmlFor="name">Name</Label>
+				<Label htmlFor="name">Nome</Label>
 				<Input
 					id="name"
 					type="text"
@@ -38,7 +40,7 @@ export default function RegisterFormView(props: RegisterFormViewProps) {
 				/>
 			</div>
 			<div className="space-y-2">
-				<Label htmlFor="password">Password</Label>
+				<Label htmlFor="password">Senha</Label>
 				<Input
 					id="password"
 					type={passwordInputType}
@@ -48,6 +50,19 @@ export default function RegisterFormView(props: RegisterFormViewProps) {
 					onIconEyeClick={handleIconEyeClick}
 					isEyeOpen={passwordInputType === 'password'}
 					helperText={errors.password?.message}
+				/>
+			</div>
+			<div className="space-y-2">
+				<Label htmlFor="confirmPassword">Confirmação da senha</Label>
+				<Input
+					id="confirmPassword"
+					type={confirmPasswordInputType}
+					placeholder="Digite a confirmação da senha"
+					{...register('confirmPassword')}
+					isDirty={dirtyFields.confirmPassword}
+					onIconEyeClick={handleConfirmPasswordIconEyeClick}
+					isEyeOpen={confirmPasswordInputType === 'password'}
+					helperText={errors.confirmPassword?.message}
 				/>
 			</div>
 			<Button
