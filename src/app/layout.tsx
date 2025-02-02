@@ -1,6 +1,13 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+import { Poppins } from 'next/font/google';
+
+const poppins = Poppins({
+	subsets: ['latin'],
+	weight: ['400', '700'],
+});
+
 export const metadata: Metadata = {
 	title: {
 		template: '%s - NextWay',
@@ -17,7 +24,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="pt-BR">
+		<html lang="pt-BR" className={poppins.className}>
 			<body>{children}</body>
 		</html>
 	);

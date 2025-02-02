@@ -1,4 +1,9 @@
+import type { Metadata } from 'next';
 import AuthTabs from './_components/auth-tabs';
+
+export const metadata: Metadata = {
+	title: 'Autenticação',
+};
 
 export default function AuthPage() {
 	return (
