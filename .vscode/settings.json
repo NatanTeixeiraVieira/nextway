@@ -5,5 +5,7 @@
 		"source.addMissingImports.ts": "explicit",
 		"source.sortImports": "explicit",
 		"source.removeUnusedImports": "explicit"
-	}
+	},
+	"editor.wordWrap": "on",
+	"editor.wordWrapColumn": 80
 }
