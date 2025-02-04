@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { LoaderCircle } from 'lucide-react';
 import type { useRegisterForm } from './register-form.model';
 
 type RegisterFormViewProps = ReturnType<typeof useRegisterForm>;
@@ -11,6 +12,7 @@ export default function RegisterFormView(props: RegisterFormViewProps) {
 		passwordInputType,
 		dirtyFields,
 		confirmPasswordInputType,
+		isPending,
 		handleConfirmPasswordIconEyeClick,
 		handleSubmit,
 		register,
@@ -67,11 +69,11 @@ export default function RegisterFormView(props: RegisterFormViewProps) {
 			</div>
 			<Button
 				type="submit"
-				// disabled={isLoading}
-				className="w-full bg-gradient-to-r from-sky-500 to-sky-600"
+				disabled={isPending}
+				className="w-full bg-gradient-to-r from-sky-500 to-sky-600 py-0"
 			>
-				{/* {isLoading ? 'Logging in...' : 'Log in'} */}
-				Entrar
+				{isPending && <LoaderCircle className="animate-spin" />}
+				{!isPending && 'Entrar'}
 			</Button>
 		</form>
 	);

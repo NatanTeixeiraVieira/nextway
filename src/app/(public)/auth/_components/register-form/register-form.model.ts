@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { usePasswordInput } from '../../hooks/use-password-input';
 import { registerFormSchema } from './schemas/register-form.schema';
@@ -10,10 +11,18 @@ export type RegisterModelProps = {
 };
 
 export const useRegisterForm = ({ registerService }: RegisterModelProps) => {
+	const { mutateAsync, isPending } = useMutation({
+		mutationFn: registerService.register,
+		onSuccess: () => {
+			reset();
+		},
+	});
+
 	const {
 		register,
 		handleSubmit: submit,
 		formState: { errors, dirtyFields },
+		reset,
 	} = useForm<RegisterFormData>({
 		resolver: zodResolver(registerFormSchema),
 		defaultValues: {
@@ -31,9 +40,7 @@ export const useRegisterForm = ({ registerService }: RegisterModelProps) => {
 	} = usePasswordInput();
 
 	const handleSubmit = submit(async ({ name, email, password }) => {
-		const res = await registerService.register({ name, email, password });
-
-		console.log('🚀 ~ handleSubmit ~ res:', res);
+		await mutateAsync({ name, email, password });
 	});
 
 	return {
@@ -41,6 +48,7 @@ export const useRegisterForm = ({ registerService }: RegisterModelProps) => {
 		passwordInputType,
 		dirtyFields,
 		confirmPasswordInputType,
+		isPending,
 		handleConfirmPasswordIconEyeClick,
 		register,
 		handleSubmit,
