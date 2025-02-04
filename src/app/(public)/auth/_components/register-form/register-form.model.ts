@@ -3,8 +3,13 @@ import { useForm } from 'react-hook-form';
 import { usePasswordInput } from '../../hooks/use-password-input';
 import { registerFormSchema } from './schemas/register-form.schema';
 import type { RegisterFormData } from './types/register-form-data';
+import type { RegisterService } from './types/register.types';
 
-export const useRegisterForm = () => {
+export type RegisterModelProps = {
+	registerService: RegisterService;
+};
+
+export const useRegisterForm = ({ registerService }: RegisterModelProps) => {
 	const {
 		register,
 		handleSubmit: submit,
@@ -25,7 +30,11 @@ export const useRegisterForm = () => {
 		handleIconEyeClick: handleConfirmPasswordIconEyeClick,
 	} = usePasswordInput();
 
-	const handleSubmit = submit(async ({ name, email, password }) => {});
+	const handleSubmit = submit(async ({ name, email, password }) => {
+		const res = await registerService.register({ name, email, password });
+
+		console.log('🚀 ~ handleSubmit ~ res:', res);
+	});
 
 	return {
 		errors,
