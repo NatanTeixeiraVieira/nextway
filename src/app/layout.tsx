@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+import { Toaster } from '@/components/ui/toaster';
 import Providers from '@/providers/providers';
 import { Poppins } from 'next/font/google';
 
@@ -26,9 +27,12 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="pt-BR" className={poppins.className}>
-			<Providers>
-				<body>{children}</body>
-			</Providers>
+			<body>
+				<Providers>
+					{children}
+					<Toaster />
+				</Providers>
+			</body>
 		</html>
 	);
 }

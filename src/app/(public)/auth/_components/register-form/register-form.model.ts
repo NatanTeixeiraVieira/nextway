@@ -1,20 +1,26 @@
+import { useToast } from '@/hooks/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { usePasswordInput } from '../../hooks/use-password-input';
 import { registerFormSchema } from './schemas/register-form.schema';
 import type { RegisterFormData } from './types/register-form-data';
-import type { RegisterService } from './types/register.types';
+import type { RegisterService } from './types/register.type';
 
 export type RegisterModelProps = {
 	registerService: RegisterService;
 };
 
 export const useRegisterForm = ({ registerService }: RegisterModelProps) => {
+	const { toast } = useToast();
+
 	const { mutateAsync, isPending } = useMutation({
 		mutationFn: registerService.register,
 		onSuccess: () => {
 			reset();
+			toast({
+				title: 'Um link de verificação foi enviado para o seu email',
+			});
 		},
 	});
 

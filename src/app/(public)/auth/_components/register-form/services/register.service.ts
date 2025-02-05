@@ -3,15 +3,15 @@ import type {
 	RegisterInput,
 	RegisterOutput,
 	RegisterService,
-} from '../types/register.types';
+} from '../types/register.type';
 
 export const registerService: RegisterService = {
 	register: async (
-		params: RegisterInput,
+		input: RegisterInput,
 	): Promise<FetcherResponse<RegisterOutput>> => {
 		const response = await fetcher<RegisterOutput>('/user/v1/register', {
 			method: 'POST',
-			body: params,
+			body: input,
 		});
 
 		return response;

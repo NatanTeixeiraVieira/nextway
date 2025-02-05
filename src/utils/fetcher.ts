@@ -1,3 +1,5 @@
+import { AppError } from '@/errors/error';
+
 export type FetcherResponse<R = unknown> = {
 	data: R;
 };
@@ -11,16 +13,25 @@ type Options = Omit<RequestInit, 'body' | 'method'> & {
 
 export const fetcher = async <Response = unknown>(
 	url: string,
-	options?: Options,
+	options: Options,
 ): Promise<FetcherResponse<Response>> => {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api${url}`, {
 		...options,
 		body: JSON.stringify(options?.body),
 		headers: {
 			'Content-Type': 'application/json',
-			...options?.headers,
+			...options.headers,
 		},
 	});
+
+	if (!res.ok) {
+		const errorData = await res.json();
+		throw new AppError(
+			errorData.statusCode,
+			errorData.error,
+			errorData.message,
+		);
+	}
 
 	const response = await res.json();
 
