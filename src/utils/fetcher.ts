@@ -15,14 +15,24 @@ export const fetcher = async <Response = unknown>(
 	url: string,
 	options: Options,
 ): Promise<FetcherResponse<Response>> => {
-	const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api${url}`, {
+	const init: RequestInit = {
 		...options,
 		body: JSON.stringify(options?.body),
 		headers: {
 			'Content-Type': 'application/json',
 			...options.headers,
 		},
-	});
+	};
+
+	if (!init.body) {
+		// biome-ignore lint/performance/noDelete: It's necessary remove the body if undefined
+		delete init.body;
+	}
+
+	const res = await fetch(
+		`${process.env.NEXT_PUBLIC_API_BASE_URL}/api${url}`,
+		init,
+	);
 
 	if (!res.ok) {
 		const errorData = await res.json();

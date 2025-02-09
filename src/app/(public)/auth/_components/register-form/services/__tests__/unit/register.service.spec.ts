@@ -22,6 +22,6 @@ describe('registerService unit tests', () => {
 			method: 'POST',
 			body: input,
 		});
-		expect(output).toEqual(mockResponse);
+		expect(output).toStrictEqual(mockResponse);
 	});
 });
