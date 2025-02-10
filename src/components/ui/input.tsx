@@ -43,7 +43,11 @@ const Input = ({
 				)}
 			</div>
 
-			{helperText && <span className="text-error text-xs">{helperText}</span>}
+			{helperText && (
+				<span data-testid="helper-text" className="text-error text-xs">
+					{helperText}
+				</span>
+			)}
 		</div>
 	);
 };

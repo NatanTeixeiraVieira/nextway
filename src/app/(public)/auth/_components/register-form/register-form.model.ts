@@ -19,6 +19,7 @@ export const useRegisterForm = ({ registerService }: RegisterModelProps) => {
 		onSuccess: () => {
 			reset();
 			toast({
+				className: 'register-send-email-toast',
 				title: 'Um link de verificação foi enviado para o seu email',
 			});
 		},

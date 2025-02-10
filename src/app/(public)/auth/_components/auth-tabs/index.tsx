@@ -1,8 +1,9 @@
 'use client';
 
 import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { type ComponentProps, useState } from 'react';
 import LoginForm from '../login-form';
 import RegisterForm from '../register-form';
 
@@ -19,6 +20,7 @@ export default function AuthTabs() {
 					Login
 				</TabButton>
 				<TabButton
+					data-testid="register"
 					active={activeTab === 'register'}
 					onClick={() => setActiveTab('register')}
 				>
@@ -43,18 +45,28 @@ export default function AuthTabs() {
 	);
 }
 
-type TabButtonProps = {
+type TabButtonProps = ComponentProps<'button'> & {
 	active: boolean;
 	children: React.ReactNode;
 	onClick: () => void;
 };
 
-function TabButton({ active, children, onClick }: TabButtonProps) {
+function TabButton({
+	active,
+	children,
+	className,
+	onClick,
+	...rest
+}: TabButtonProps) {
 	return (
 		<button
 			type="button"
-			className={`relative flex-1 py-4 font-medium text-sm transition-colors ${active ? 'text-sky-600' : 'text-gray-500 hover:text-gray-700'}`}
+			className={cn(
+				`relative flex-1 py-4 font-medium text-sm transition-colors ${active ? 'text-sky-600' : 'text-gray-500 hover:text-gray-700'}`,
+				className,
+			)}
 			onClick={onClick}
+			{...rest}
 		>
 			{children}
 			{active && (
