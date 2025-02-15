@@ -22,7 +22,7 @@ describe('<AuthPage /> e2e tests', () => {
 			cy.get('[data-testid="helper-text"]').should('have.length', 4);
 		});
 
-		it('should show validation errors messages on form submission', () => {
+		it('should register user', () => {
 			cy.intercept('http://localhost:3333/api/user/v1/register', {
 				body: { id: '4b5ccb25-ad6d-46b7-a37a-e635c4f37252' },
 			}).as('register');
