@@ -74,7 +74,7 @@ export default function RegisterFormView(props: RegisterFormViewProps) {
 				className="w-full bg-gradient-to-r from-sky-500 to-sky-600 py-0"
 			>
 				{isPending && <Spinner />}
-				{!isPending && 'Entrar'}
+				{!isPending && 'Cadastrar-se'}
 			</Button>
 		</form>
 	);

@@ -29,16 +29,7 @@
 				"noUnusedVariables": "warn",
 				"useExhaustiveDependencies": "warn"
 			},
-			"nursery": {
-				"useSortedClasses": {
-					"options": {
-						"attributes": ["classList"],
-						"functions": ["clsx", "cva", "tw"]
-					},
-					"level": "error",
-					"fix": "safe"
-				}
-			},
+
 			"recommended": true
 		}
 	},

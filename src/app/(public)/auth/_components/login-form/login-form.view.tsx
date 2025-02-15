@@ -1,3 +1,4 @@
+import Spinner from '@/components/spinner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,6 +12,7 @@ export default function LoginFormView(props: LoginFormViewProps) {
 		errors,
 		passwordInputType,
 		dirtyFields,
+		isPending,
 		handleSubmit,
 		register,
 		handleIconEyeClick,
@@ -51,11 +53,11 @@ export default function LoginFormView(props: LoginFormViewProps) {
 			</div>
 			<Button
 				type="submit"
-				// disabled={isLoading}
+				disabled={isPending}
 				className="w-full bg-gradient-to-r from-sky-500 to-sky-600"
 			>
-				{/* {isLoading ? 'Logging in...' : 'Log in'} */}
-				Entrar
+				{isPending && <Spinner />}
+				{!isPending && 'Entrar'}
 			</Button>
 		</form>
 	);
