@@ -1,4 +1,6 @@
+import type { AppError } from '@/errors/error';
 import { useToast } from '@/hooks/use-toast';
+import { requestErrorHandling } from '@/utils/error-handling';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -21,6 +23,12 @@ export const useRegisterForm = ({ registerService }: RegisterModelProps) => {
 			toast({
 				className: 'register-send-email-toast',
 				title: 'Um link de verificação foi enviado para o seu email',
+			});
+		},
+		onError: (error: AppError) => {
+			toast({
+				className: 'register-send-email-toast-error',
+				title: requestErrorHandling(error, 'Falha ao realizar cadastro.'),
 			});
 		},
 	});
