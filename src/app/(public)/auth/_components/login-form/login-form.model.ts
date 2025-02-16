@@ -1,4 +1,6 @@
+import type { AppError } from '@/errors/error';
 import { useToast } from '@/hooks/use-toast';
+import { requestErrorHandling } from '@/utils/error-handling';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -22,11 +24,11 @@ export const useLoginForm = ({ loginService }: LoginModelProps) => {
 			reset();
 			router.push('/');
 		},
-		onError: (error) => {
+		onError: (error: AppError) => {
 			toast({
 				variant: 'default',
-				// className: 'register-send-email-toast',
-				title: `${error.message}.`,
+				className: 'login-send-email-toast-error',
+				title: requestErrorHandling(error, 'Falha ao realizar login.'),
 			});
 		},
 	});

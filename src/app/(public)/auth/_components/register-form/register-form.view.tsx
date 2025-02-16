@@ -68,10 +68,10 @@ export default function RegisterFormView(props: RegisterFormViewProps) {
 				/>
 			</div>
 			<Button
-				data-testid="register-submit-button"
 				type="submit"
 				disabled={isPending}
 				className="w-full bg-gradient-to-r from-sky-500 to-sky-600 py-0"
+				data-testid="register-submit-button"
 			>
 				{isPending && <Spinner />}
 				{!isPending && 'Cadastrar-se'}
