@@ -10,10 +10,19 @@ export default function ActivateAccountView(props: ActivateAccountViewProps) {
 	return (
 		<>
 			<div className="mt-12 flex w-full justify-center">
-				{isPending && <Spinner size={44} strokeWidth={1.5} />}
+				{isPending && (
+					<Spinner
+						size={44}
+						strokeWidth={1.5}
+						data-testid="activate-account-loading"
+					/>
+				)}
 			</div>
 			{error instanceof AppError && error.statusCode === 401 && (
-				<div className="mx-auto mt-32 w-fit rounded border border-error bg-red-300 p-12">
+				<div
+					className="mx-auto mt-32 w-fit rounded border border-error bg-red-300 p-12"
+					data-testid="invalid-token-content"
+				>
 					<p>O token informado não é válido.</p>
 				</div>
 			)}

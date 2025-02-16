@@ -10,7 +10,7 @@ export type ActivateAccountParams = {
 	}>;
 };
 
-export default function ActivateAccount({ params }: ActivateAccountParams) {
+export default function ActivateAccountPage({ params }: ActivateAccountParams) {
 	const methods = useActivateAccount({
 		params,
 		activateAccountService,
