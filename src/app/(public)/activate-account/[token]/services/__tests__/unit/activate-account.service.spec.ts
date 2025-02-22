@@ -19,6 +19,7 @@ describe('activateAccountService unit tests', () => {
 		expect(fetcher).toHaveBeenCalledTimes(1);
 		expect(fetcher).toHaveBeenCalledWith('/user/v1/check-email', {
 			method: 'POST',
+			disableRefresh: true,
 			body: input,
 		});
 		expect(output).toStrictEqual(mockResponse);

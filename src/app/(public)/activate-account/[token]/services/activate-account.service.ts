@@ -14,6 +14,7 @@ export const activateAccountService: ActivateAccountService = {
 			{
 				method: 'POST',
 				body: input,
+				disableRefresh: true,
 			},
 		);
 

@@ -11,6 +11,7 @@ type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD';
 type Options = Omit<RequestInit, 'body' | 'method'> & {
 	body?: Record<string, unknown>;
 	method: Methods;
+	disableRefresh?: boolean;
 };
 
 export const fetcher = async <Res = unknown>(
@@ -19,13 +20,13 @@ export const fetcher = async <Res = unknown>(
 ): Promise<FetcherResponse<Res>> => {
 	const init = initHandling(options);
 
-	const res = await fetch(`${baseUrl}${url}`, init);
+	let res = await fetch(`${baseUrl}${url}`, init);
 
-	const authHandledRequest = await handleAuthError(res, () =>
-		fetch(`${baseUrl}${url}`, init),
-	);
+	if (!options.disableRefresh) {
+		res = await handleAuthError(res, () => fetch(`${baseUrl}${url}`, init));
+	}
 
-	return await responseHandling(authHandledRequest);
+	return await responseHandling(res);
 };
 
 const initHandling = (options: Options): RequestInit => {

@@ -158,4 +158,38 @@ describe('fetcher unit tests', () => {
 		expect(getMock).toHaveBeenCalledTimes(1);
 		expect(getMock).toHaveBeenCalledWith('content-length');
 	});
+
+	it('should not refresh token when status code is 401 and disableRefresh is true', async () => {
+		const errorData = {
+			statusCode: 401,
+			error: 'Unauthorized',
+			message: 'Invalid token',
+		};
+
+		global.fetch = jest.fn().mockResolvedValue({
+			ok: false,
+			status: 401,
+			json: jest.fn().mockResolvedValue(errorData),
+			headers: {
+				get: getMock,
+			},
+		});
+
+		await expect(
+			fetcher('/test-endpoint', { method: 'POST', disableRefresh: true }),
+		).rejects.toThrow(
+			new AppError(errorData.statusCode, errorData.error, errorData.message),
+		);
+
+		expect(global.fetch).toHaveBeenCalledTimes(1);
+		expect(global.fetch).toHaveBeenCalledWith(
+			'http://localhost:3333/api/test-endpoint',
+			{
+				method: 'POST',
+				disableRefresh: true,
+			},
+		);
+
+		expect(getMock).toHaveBeenCalledTimes(0);
+	});
 });
