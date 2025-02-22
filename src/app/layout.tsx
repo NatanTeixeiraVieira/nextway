@@ -29,7 +29,7 @@ export default function RootLayout({
 		<html lang="pt-BR" className={poppins.className}>
 			<body>
 				<Providers>
-					{children}
+					<main>{children}</main>
 					<Toaster />
 				</Providers>
 			</body>

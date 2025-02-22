@@ -27,6 +27,7 @@ export const useRegisterForm = ({ registerService }: RegisterModelProps) => {
 		},
 		onError: (error: AppError) => {
 			toast({
+				variant: 'destructive',
 				className: 'register-send-email-toast-error',
 				title: requestErrorHandling(error, 'Falha ao realizar cadastro.'),
 			});
