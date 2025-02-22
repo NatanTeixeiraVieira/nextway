@@ -1,5 +1,7 @@
 import { AppError } from '@/errors/error';
 
+const baseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
+
 export type FetcherResponse<R = unknown> = {
 	data: R | null;
 };
@@ -11,10 +13,22 @@ type Options = Omit<RequestInit, 'body' | 'method'> & {
 	method: Methods;
 };
 
-export const fetcher = async <Response = unknown>(
+export const fetcher = async <Res = unknown>(
 	url: string,
 	options: Options,
-): Promise<FetcherResponse<Response>> => {
+): Promise<FetcherResponse<Res>> => {
+	const init = initHandling(options);
+
+	const res = await fetch(`${baseUrl}${url}`, init);
+
+	const authHandledRequest = await handleAuthError(res, () =>
+		fetch(`${baseUrl}${url}`, init),
+	);
+
+	return await responseHandling(authHandledRequest);
+};
+
+const initHandling = (options: Options): RequestInit => {
 	const defaultHeaders: HeadersInit = {
 		'Content-Type': 'application/json',
 	};
@@ -45,11 +59,12 @@ export const fetcher = async <Response = unknown>(
 		delete init.headers;
 	}
 
-	const res = await fetch(
-		`${process.env.NEXT_PUBLIC_API_BASE_URL}/api${url}`,
-		init,
-	);
+	return init;
+};
 
+const responseHandling = async <Res = unknown>(
+	res: Response,
+): Promise<FetcherResponse<Res>> => {
 	if (!res.ok) {
 		const errorData = await res.json();
 		throw new AppError(
@@ -70,4 +85,35 @@ export const fetcher = async <Response = unknown>(
 	return {
 		data: response,
 	};
+};
+
+const handleAuthError = async (
+	res: Response,
+	request: () => Promise<Response>,
+) => {
+	if (res.status !== 401) return res;
+
+	const refreshResponse = await fetch(`${baseUrl}/refresh`);
+
+	if (!refreshResponse.ok) {
+		const errorData = await refreshResponse.json();
+		throw new AppError(
+			errorData.statusCode,
+			errorData.error,
+			errorData.message,
+		);
+	}
+
+	const mainRequestResponse = await request();
+
+	if (!mainRequestResponse.ok) {
+		const errorData = await res.json();
+		throw new AppError(
+			errorData.statusCode,
+			errorData.error,
+			errorData.message,
+		);
+	}
+
+	return mainRequestResponse;
 };

@@ -4,6 +4,10 @@ import { fetcher } from '@/utils/fetcher';
 describe('fetcher unit tests', () => {
 	const getMock = jest.fn().mockReturnValue('1');
 
+	beforeEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('should throw an error when response is not ok', async () => {
 		const errorData = {
 			statusCode: 500,
@@ -96,5 +100,62 @@ describe('fetcher unit tests', () => {
 				},
 			},
 		);
+	});
+
+	it('should do the refresh token when the status code is 401', async () => {
+		global.fetch = jest
+			.fn()
+			.mockResolvedValueOnce({
+				ok: false,
+				status: 401,
+				headers: {
+					get: getMock,
+				},
+			})
+			.mockResolvedValueOnce({ ok: true })
+			.mockResolvedValueOnce({
+				ok: true,
+				json: jest.fn().mockResolvedValue({
+					items: [
+						{ id: '867b58c1-9cbe-47ac-b6a0-646f1f66bb75', name: 'test name' },
+					],
+				}),
+				headers: {
+					get: getMock,
+				},
+			});
+
+		const response = await fetcher('/test-endpoint', {
+			method: 'GET',
+		});
+
+		expect(response.data).toStrictEqual({
+			items: [
+				{ id: '867b58c1-9cbe-47ac-b6a0-646f1f66bb75', name: 'test name' },
+			],
+		});
+
+		expect(global.fetch).toHaveBeenCalledTimes(3);
+		expect(global.fetch).toHaveBeenNthCalledWith(
+			1,
+			'http://localhost:3333/api/test-endpoint',
+			{
+				method: 'GET',
+			},
+		);
+		expect(global.fetch).toHaveBeenNthCalledWith(
+			2,
+			'http://localhost:3333/api/refresh',
+		);
+		expect(global.fetch).toHaveBeenNthCalledWith(
+			3,
+			'http://localhost:3333/api/test-endpoint',
+			{
+				method: 'GET',
+			},
+		);
+
+		expect(getMock).toHaveBeenCalledTimes(1);
+		expect(getMock).toHaveBeenCalledWith('content-length');
 	});
 });
