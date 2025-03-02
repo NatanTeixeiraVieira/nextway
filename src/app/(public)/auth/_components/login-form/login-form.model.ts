@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { usePasswordInput } from '../../hooks/use-password-input';
 import { loginFormSchema } from './schemas/login-form.schema';
-import type { LoginFormData } from './types/login-form-data';
+import type { LoginFormData } from './types/login-form-data.type';
 import type { LoginService } from './types/login.type';
 
 export type LoginModelProps = {
@@ -26,7 +26,7 @@ export const useLoginForm = ({ loginService }: LoginModelProps) => {
 		},
 		onError: (error: AppError) => {
 			toast({
-				variant: 'default',
+				variant: 'destructive',
 				className: 'login-send-email-toast-error',
 				title: requestErrorHandling(error, 'Falha ao realizar login.'),
 			});
