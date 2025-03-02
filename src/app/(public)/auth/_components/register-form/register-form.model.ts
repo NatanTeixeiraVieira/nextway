@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { usePasswordInput } from '../../hooks/use-password-input';
 import { registerFormSchema } from './schemas/register-form.schema';
-import type { RegisterFormData } from './types/register-form-data';
+import type { RegisterFormData } from './types/register-form-data.type';
 import type { RegisterService } from './types/register.type';
 
 export type RegisterModelProps = {
