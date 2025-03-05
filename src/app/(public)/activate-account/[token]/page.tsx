@@ -10,6 +10,7 @@ export type ActivateAccountParams = {
 	}>;
 };
 
+// TODO: Change the request to server side
 export default function ActivateAccountPage({ params }: ActivateAccountParams) {
 	const methods = useActivateAccount({
 		params,

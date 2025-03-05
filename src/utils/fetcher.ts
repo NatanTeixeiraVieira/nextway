@@ -4,6 +4,8 @@ const baseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
 
 export type FetcherResponse<R = unknown> = {
 	data: R | null;
+	response: Response;
+	// headers: Headers | null;
 };
 
 type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD';
@@ -19,6 +21,7 @@ export const fetcher = async <Res = unknown>(
 	options: Options,
 ): Promise<FetcherResponse<Res>> => {
 	const init = initHandling(options);
+	console.log('🚀 ~ init:', init);
 
 	let res = await fetch(`${baseUrl}${url}`, init);
 
@@ -48,6 +51,7 @@ const initHandling = (options: Options): RequestInit => {
 		...options,
 		body: JSON.stringify(options?.body),
 		headers,
+		credentials: 'include',
 	};
 
 	if (!init.body) {
@@ -75,8 +79,13 @@ const responseHandling = async <Res = unknown>(
 		);
 	}
 
-	if (res.headers.get('content-length') === '0') {
+	if (
+		!res.headers.get('content-length') ||
+		res.headers.get('content-length') === '0'
+	) {
 		return {
+			response: res,
+			// headers: null,
 			data: null,
 		};
 	}
@@ -84,6 +93,8 @@ const responseHandling = async <Res = unknown>(
 	const response = await res.json();
 
 	return {
+		// headers: res.headers,
+		response: res,
 		data: response,
 	};
 };
@@ -94,7 +105,9 @@ const handleAuthError = async (
 ) => {
 	if (res.status !== 401) return res;
 
-	const refreshResponse = await fetch(`${baseUrl}/refresh`);
+	const refreshResponse = await fetch(`${baseUrl}/user/v1/refresh`, {
+		method: 'POST',
+	});
 
 	if (!refreshResponse.ok) {
 		const errorData = await refreshResponse.json();

@@ -1,4 +1,4 @@
-import { type FetcherResponse, fetcher } from '@/utils/fetcher';
+import { fetcher, type FetcherResponse } from '@/utils/fetcher';
 import type {
 	LoginInput,
 	LoginOutput,

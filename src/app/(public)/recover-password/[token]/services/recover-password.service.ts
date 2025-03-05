@@ -1,3 +1,4 @@
+import { AppError } from '@/errors/error';
 import { fetcher, type FetcherResponse } from '@/utils/fetcher';
 import type {
 	ChangePasswordInput,
@@ -16,8 +17,17 @@ export const recoverPasswordService: RecoverPasswordService = {
 			{
 				method: 'POST',
 				body: input,
+				disableRefresh: true,
 			},
 		);
+
+		if (!response.data?.isValid) {
+			throw new AppError(
+				401,
+				'Token inválido',
+				'O token de recuperação de senha é inválido.',
+			);
+		}
 
 		return response;
 	},
@@ -30,8 +40,10 @@ export const recoverPasswordService: RecoverPasswordService = {
 			{
 				method: 'POST',
 				body: input,
+				disableRefresh: true,
 			},
 		);
+		console.log('🚀 ~ response:', response);
 
 		return response;
 	},

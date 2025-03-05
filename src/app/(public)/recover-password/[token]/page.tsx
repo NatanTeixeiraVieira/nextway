@@ -1,7 +1,5 @@
-'use client';
-
-import { useRecoverPassword } from './recover-password.model';
-import RecoverPasswordView from './recover-password.view';
+import RecoverPasswordContent from './_components/recover-password-content';
+import { recoverPassword } from './recover-password.model';
 import { recoverPasswordService } from './services/recover-password.service';
 
 export type RecoverPasswordParams = {
@@ -10,9 +8,10 @@ export type RecoverPasswordParams = {
 	}>;
 };
 
-// TODO: Remove use client and make the recover password by server
-export default function RecoverPasswordPage({ params }: RecoverPasswordParams) {
-	const methods = useRecoverPassword({ params, recoverPasswordService });
+export default async function RecoverPasswordPage({
+	params,
+}: RecoverPasswordParams) {
+	await recoverPassword({ params, recoverPasswordService });
 
-	return <RecoverPasswordView {...methods} />;
+	return <RecoverPasswordContent params={params} />;
 }
