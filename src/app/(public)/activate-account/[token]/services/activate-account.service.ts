@@ -1,4 +1,4 @@
-import { fetcher, type FetcherResponse } from '@/utils/fetcher';
+import { api, type FetcherResponse } from '@/utils/api';
 import type {
 	ActivateAccountInput,
 	ActivateAccountOutput,
@@ -9,11 +9,10 @@ export const activateAccountService: ActivateAccountService = {
 	checkEmail: async (
 		input: ActivateAccountInput,
 	): Promise<FetcherResponse<ActivateAccountOutput>> => {
-		const response = await fetcher<ActivateAccountOutput>(
+		const response = await api.post<ActivateAccountOutput>(
 			'/user/v1/check-email',
+			input,
 			{
-				method: 'POST',
-				body: input,
 				disableRefresh: true,
 			},
 		);

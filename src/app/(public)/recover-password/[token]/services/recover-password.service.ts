@@ -1,5 +1,5 @@
 import { AppError } from '@/errors/error';
-import { fetcher, type FetcherResponse } from '@/utils/fetcher';
+import { api, type FetcherResponse } from '@/utils/api';
 import type {
 	ChangePasswordInput,
 	ChangePasswordOutput,
@@ -12,11 +12,10 @@ export const recoverPasswordService: RecoverPasswordService = {
 	verifyToken: async (
 		input: VerifyTokenInput,
 	): Promise<FetcherResponse<VerifyTokenOutput>> => {
-		const response = await fetcher<VerifyTokenOutput>(
+		const response = await api.post<VerifyTokenOutput>(
 			'/user/v1/recover-password/verify-token',
+			input,
 			{
-				method: 'POST',
-				body: input,
 				disableRefresh: true,
 			},
 		);
@@ -35,11 +34,10 @@ export const recoverPasswordService: RecoverPasswordService = {
 	changePassword: async (
 		input: ChangePasswordInput,
 	): Promise<FetcherResponse<ChangePasswordOutput>> => {
-		const response = await fetcher<ChangePasswordOutput>(
+		const response = await api.post<ChangePasswordOutput>(
 			'/user/v1/recover-password/change-password',
+			input,
 			{
-				method: 'POST',
-				body: input,
 				disableRefresh: true,
 			},
 		);

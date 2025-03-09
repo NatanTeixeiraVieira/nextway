@@ -1,4 +1,4 @@
-import { type FetcherResponse, fetcher } from '@/utils/fetcher';
+import { api, type FetcherResponse } from '@/utils/api';
 import type {
 	ForgotPasswordInput,
 	ForgotPasswordOutput,
@@ -9,12 +9,9 @@ export const forgotPasswordService: ForgotPasswordService = {
 	sendEmail: async (
 		input: ForgotPasswordInput,
 	): Promise<FetcherResponse<ForgotPasswordOutput>> => {
-		const response = await fetcher<ForgotPasswordOutput>(
+		const response = await api.post<ForgotPasswordOutput>(
 			'/user/v1/recover-password/send-email',
-			{
-				method: 'POST',
-				body: input,
-			},
+			input,
 		);
 
 		return response;

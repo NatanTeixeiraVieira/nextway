@@ -1,4 +1,4 @@
-import { fetcher, type FetcherResponse } from '@/utils/fetcher';
+import { api, type FetcherResponse } from '@/utils/api';
 import type {
 	LoginInput,
 	LoginOutput,
@@ -7,10 +7,7 @@ import type {
 
 export const loginService: LoginService = {
 	login: async (input: LoginInput): Promise<FetcherResponse<LoginOutput>> => {
-		const response = await fetcher<LoginOutput>('/user/v1/login', {
-			method: 'POST',
-			body: input,
-		});
+		const response = await api.post<LoginOutput>('/user/v1/login', input);
 
 		return response;
 	},
