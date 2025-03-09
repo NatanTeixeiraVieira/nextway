@@ -1,13 +1,13 @@
-import { fetcher } from '@/utils/fetcher';
+import { api } from '@/utils/api';
 import { loginService } from '../../login.service';
 
-jest.mock('@/utils/fetcher');
+jest.mock('@/utils/api');
 
 describe('loginService unit tests', () => {
 	it('should login user', async () => {
 		const mockResponse = { data: { success: true } };
 
-		(fetcher as jest.Mock).mockResolvedValue(mockResponse);
+		(api.post as jest.Mock).mockResolvedValue(mockResponse);
 
 		const input = {
 			email: 'email@test.com',
@@ -16,11 +16,8 @@ describe('loginService unit tests', () => {
 
 		const output = await loginService.login(input);
 
-		expect(fetcher).toHaveBeenCalledTimes(1);
-		expect(fetcher).toHaveBeenCalledWith('/user/v1/login', {
-			method: 'POST',
-			body: input,
-		});
+		expect(api.post).toHaveBeenCalledTimes(1);
+		expect(api.post).toHaveBeenCalledWith('/user/v1/login', input);
 		expect(output).toStrictEqual(mockResponse);
 	});
 });

@@ -1,13 +1,13 @@
-import { fetcher } from '@/utils/fetcher';
+import { api } from '@/utils/api';
 import { registerService } from '../../register.service';
 
-jest.mock('@/utils/fetcher');
+jest.mock('@/utils/api');
 
 describe('registerService unit tests', () => {
 	it('should register user', async () => {
 		const mockResponse = { data: { success: true } };
 
-		(fetcher as jest.Mock).mockResolvedValue(mockResponse);
+		(api.post as jest.Mock).mockResolvedValue(mockResponse);
 
 		const input = {
 			email: 'email@test.com',
@@ -17,11 +17,8 @@ describe('registerService unit tests', () => {
 
 		const output = await registerService.register(input);
 
-		expect(fetcher).toHaveBeenCalledTimes(1);
-		expect(fetcher).toHaveBeenCalledWith('/user/v1/register', {
-			method: 'POST',
-			body: input,
-		});
+		expect(api.post).toHaveBeenCalledTimes(1);
+		expect(api.post).toHaveBeenCalledWith('/user/v1/register', input);
 		expect(output).toStrictEqual(mockResponse);
 	});
 });

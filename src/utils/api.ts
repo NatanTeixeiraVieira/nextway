@@ -16,7 +16,7 @@ type Options = Omit<RequestInit, 'method'> & {
 type UpsertOptions = Omit<Options, 'body'>;
 
 export type Api = {
-	get: <Res>(url: string, options: Options) => Promise<FetcherResponse<Res>>;
+	get: <Res>(url: string, options?: Options) => Promise<FetcherResponse<Res>>;
 	post: <Res>(
 		url: string,
 		body?: Body,
@@ -27,18 +27,21 @@ export type Api = {
 		body?: Body,
 		options?: UpsertOptions,
 	) => Promise<FetcherResponse<Res>>;
-	delete: <Res>(url: string, options: Options) => Promise<FetcherResponse<Res>>;
+	delete: <Res>(
+		url: string,
+		options?: Options,
+	) => Promise<FetcherResponse<Res>>;
 };
 
 export const api: Api = {
 	get: async <Res>(
 		url: string,
-		options: Options,
+		options?: Options,
 	): Promise<FetcherResponse<Res>> => {
 		const init = initHandling(options);
 		let res = await fetch(`${baseUrl}${url}`, init);
 
-		if (!options.disableRefresh) {
+		if (!options?.disableRefresh) {
 			res = await handleAuthError(res, () => fetch(`${baseUrl}${url}`, init));
 		}
 
@@ -83,20 +86,20 @@ export const api: Api = {
 
 	delete: async <Res>(
 		url: string,
-		options: Options,
+		options?: Options,
 	): Promise<FetcherResponse<Res>> => {
 		const deleteOptions: Options = {
 			...options,
 		};
 
-		if (options.body) {
+		if (options?.body) {
 			const defaultHeaders: HeadersInit = {
 				'Content-Type': 'application/json',
 			};
 
 			const headers: HeadersInit = {
 				...defaultHeaders,
-				...options.headers,
+				...options?.headers,
 			};
 			deleteOptions.headers = headers;
 		}
@@ -107,7 +110,7 @@ export const api: Api = {
 			method: 'DELETE',
 		});
 
-		if (!options.disableRefresh) {
+		if (!options?.disableRefresh) {
 			res = await handleAuthError(res, () => fetch(`${baseUrl}${url}`, init));
 		}
 
@@ -115,7 +118,7 @@ export const api: Api = {
 	},
 };
 
-const initHandling = (options: Options): RequestInit => {
+const initHandling = (options?: Options): RequestInit => {
 	const init: RequestInit = {
 		...options,
 		credentials: 'include',
@@ -171,7 +174,6 @@ const responseHandling = async <Res = unknown>(
 	) {
 		return {
 			response: res,
-			// headers: null,
 			data: null,
 		};
 	}

@@ -1,14 +1,14 @@
-import { fetcher } from '@/utils/fetcher';
+import { api } from '@/utils/api';
 import type { ActivateAccountInput } from '../../../types/activate-account.type';
 import { activateAccountService } from '../../activate-account.service';
 
-jest.mock('@/utils/fetcher');
+jest.mock('@/utils/api');
 
 describe('activateAccountService unit tests', () => {
 	it('should activateAccount user', async () => {
 		const mockResponse = { data: { success: true } };
 
-		(fetcher as jest.Mock).mockResolvedValue(mockResponse);
+		(api.post as jest.Mock).mockResolvedValue(mockResponse);
 
 		const input: ActivateAccountInput = {
 			token: 'valid_token',
@@ -16,11 +16,9 @@ describe('activateAccountService unit tests', () => {
 
 		const output = await activateAccountService.checkEmail(input);
 
-		expect(fetcher).toHaveBeenCalledTimes(1);
-		expect(fetcher).toHaveBeenCalledWith('/user/v1/check-email', {
-			method: 'POST',
+		expect(api.post).toHaveBeenCalledTimes(1);
+		expect(api.post).toHaveBeenCalledWith('/user/v1/check-email', input, {
 			disableRefresh: true,
-			body: input,
 		});
 		expect(output).toStrictEqual(mockResponse);
 	});
