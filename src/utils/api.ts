@@ -1,6 +1,6 @@
 import { AppError } from '@/errors/error';
 
-const baseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`;
+const baseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
 
 export type FetcherResponse<R = unknown> = {
 	data: R | null;

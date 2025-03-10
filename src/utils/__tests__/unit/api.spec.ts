@@ -23,7 +23,7 @@ describe('api unit tests', () => {
 		const response = await sut.get('/test-endpoint');
 
 		expect(global.fetch).toHaveBeenCalledWith(
-			`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/test-endpoint`,
+			`${process.env.NEXT_PUBLIC_API_BASE_URL}/test-endpoint`,
 			{
 				credentials: 'include',
 			},
@@ -44,7 +44,7 @@ describe('api unit tests', () => {
 		const response = await sut.post('/test-endpoint', { key: 'value' });
 
 		expect(global.fetch).toHaveBeenCalledWith(
-			`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/test-endpoint`,
+			`${process.env.NEXT_PUBLIC_API_BASE_URL}/test-endpoint`,
 			{
 				method: 'POST',
 				headers: {
@@ -70,7 +70,7 @@ describe('api unit tests', () => {
 		const response = await sut.put('/test-endpoint', { key: 'value' });
 
 		expect(global.fetch).toHaveBeenCalledWith(
-			`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/test-endpoint`,
+			`${process.env.NEXT_PUBLIC_API_BASE_URL}/test-endpoint`,
 			{
 				method: 'PUT',
 				headers: {
@@ -96,7 +96,7 @@ describe('api unit tests', () => {
 		const response = await sut.delete('/test-endpoint');
 
 		expect(global.fetch).toHaveBeenCalledWith(
-			`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/test-endpoint`,
+			`${process.env.NEXT_PUBLIC_API_BASE_URL}/test-endpoint`,
 			{
 				method: 'DELETE',
 				credentials: 'include',
@@ -130,14 +130,14 @@ describe('api unit tests', () => {
 		expect(global.fetch).toHaveBeenCalledTimes(3);
 		expect(global.fetch).toHaveBeenNthCalledWith(
 			1,
-			`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/test-endpoint`,
+			`${process.env.NEXT_PUBLIC_API_BASE_URL}/test-endpoint`,
 			{
 				credentials: 'include',
 			},
 		);
 		expect(global.fetch).toHaveBeenNthCalledWith(
 			2,
-			`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/v1/refresh`,
+			`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/v1/refresh`,
 			expect.objectContaining({
 				method: 'POST',
 				credentials: 'include',
@@ -145,7 +145,7 @@ describe('api unit tests', () => {
 		);
 		expect(global.fetch).toHaveBeenNthCalledWith(
 			3,
-			`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/test-endpoint`,
+			`${process.env.NEXT_PUBLIC_API_BASE_URL}/test-endpoint`,
 			{
 				credentials: 'include',
 			},

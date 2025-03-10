@@ -32,7 +32,6 @@ const publicRoutes: RouteConfig[] = [
 
 export const middleware = async (request: NextRequest) => {
 	const path = request.nextUrl.pathname;
-	console.log('🚀 ~ middleware ~ path:', path);
 	const publicRoute = publicRoutes.find((route) => {
 		if (route.includes) {
 			return path.includes(route.path);
@@ -40,7 +39,6 @@ export const middleware = async (request: NextRequest) => {
 
 		return path === route.path;
 	});
-	console.log('🚀 ~ publicRoute ~ publicRoute:', publicRoute);
 	const authToken = request.cookies.get(CookiesName.ACCESS_TOKEN)?.value;
 
 	if (!authToken && publicRoute) {
