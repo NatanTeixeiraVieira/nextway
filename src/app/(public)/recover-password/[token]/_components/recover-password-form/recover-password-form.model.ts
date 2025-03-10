@@ -17,7 +17,7 @@ export type RecoverPasswordModelProps = {
 	recoverPasswordService: RecoverPasswordService;
 };
 
-export const useRecoverPassword = ({
+export const useRecoverPasswordForm = ({
 	params,
 	recoverPasswordService,
 }: RecoverPasswordModelProps) => {

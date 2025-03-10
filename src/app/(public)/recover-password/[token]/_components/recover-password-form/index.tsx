@@ -1,8 +1,8 @@
 'use client';
 
 import { recoverPasswordService } from '../../services/recover-password.service';
-import { useRecoverPassword } from './recover-password-content.model';
-import RecoverPasswordView from './recover-password-content.view';
+import { useRecoverPasswordForm } from './recover-password-form.model';
+import RecoverPasswordFormView from './recover-password-form.view';
 
 export type RecoverPasswordProps = {
 	params: Promise<{
@@ -13,7 +13,7 @@ export type RecoverPasswordProps = {
 export default function RecoverPasswordContent({
 	params,
 }: RecoverPasswordProps) {
-	const methods = useRecoverPassword({ params, recoverPasswordService });
+	const methods = useRecoverPasswordForm({ params, recoverPasswordService });
 
-	return <RecoverPasswordView {...methods} />;
+	return <RecoverPasswordFormView {...methods} />;
 }

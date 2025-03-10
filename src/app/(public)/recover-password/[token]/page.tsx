@@ -1,5 +1,5 @@
-import RecoverPasswordContent from './_components/recover-password-content';
 import { recoverPassword } from './recover-password.model';
+import RecoverPasswordView from './recover-password.view';
 import { recoverPasswordService } from './services/recover-password.service';
 
 export type RecoverPasswordParams = {
@@ -13,5 +13,5 @@ export default async function RecoverPasswordPage({
 }: RecoverPasswordParams) {
 	await recoverPassword({ params, recoverPasswordService });
 
-	return <RecoverPasswordContent params={params} />;
+	return <RecoverPasswordView params={params} />;
 }
