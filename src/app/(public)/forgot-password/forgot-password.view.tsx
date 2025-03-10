@@ -49,6 +49,7 @@ export default function ForgotPasswordView(props: ForgotPasswordViewProps) {
 									type="submit"
 									disabled={isPending}
 									className="w-full bg-gradient-to-r from-sky-500 to-sky-600 py-0"
+									data-testid="forgot-password-submit-button"
 								>
 									{!isPending && 'Enviar link de recuperação'}
 									{isPending && <Spinner />}
@@ -59,7 +60,10 @@ export default function ForgotPasswordView(props: ForgotPasswordViewProps) {
 				)}
 
 				{isSuccess && (
-					<div className="bg-white rounded-xl shadow-lg p-6 text-center">
+					<div
+						className="bg-white rounded-xl shadow-lg p-6 text-center"
+						data-testid="forgot-password-success-content"
+					>
 						<div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
 							<Mail className="w-6 h-6 text-sky-500" />
 						</div>
