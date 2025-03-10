@@ -1,7 +1,4 @@
-'use client';
-
-import { useActivateAccount } from './activate-account.model';
-import ActivateAccountView from './activate-account.view';
+import { activateAccount } from './activate-account.model';
 import { activateAccountService } from './services/activate-account.service';
 
 export type ActivateAccountParams = {
@@ -10,12 +7,8 @@ export type ActivateAccountParams = {
 	}>;
 };
 
-// TODO: Change the request to server side
-export default function ActivateAccountPage({ params }: ActivateAccountParams) {
-	const methods = useActivateAccount({
-		params,
-		activateAccountService,
-	});
-
-	return <ActivateAccountView {...methods} />;
+export default async function ActivateAccountPage({
+	params,
+}: ActivateAccountParams) {
+	await activateAccount({ params, activateAccountService });
 }

@@ -1,6 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { use, useEffect } from 'react';
+import { redirect } from 'next/navigation';
 import type { ActivateAccountParams } from './page';
 import type { ActivateAccountService } from './types/activate-account.type';
 
@@ -9,26 +7,11 @@ type ActivateAccountModelProps = {
 	activateAccountService: ActivateAccountService;
 };
 
-export const useActivateAccount = ({
+export const activateAccount = async ({
 	params,
 	activateAccountService,
 }: ActivateAccountModelProps) => {
-	const { token } = use(params);
-	const router = useRouter();
-
-	const { mutate, isPending, error } = useMutation({
-		mutationFn: activateAccountService.checkEmail,
-		onSuccess: () => {
-			router.push('/');
-		},
-	});
-
-	useEffect(() => {
-		mutate({ token });
-	}, [token, mutate]);
-
-	return {
-		isPending,
-		error,
-	};
+	const { token } = await params;
+	await activateAccountService.checkEmail({ token });
+	redirect('/');
 };
