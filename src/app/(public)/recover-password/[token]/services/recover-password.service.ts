@@ -41,7 +41,6 @@ export const recoverPasswordService: RecoverPasswordService = {
 				disableRefresh: true,
 			},
 		);
-		console.log('🚀 ~ response:', response);
 
 		return response;
 	},
