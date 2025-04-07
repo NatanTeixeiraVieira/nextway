@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { Eye, EyeOff } from 'lucide-react';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 
 type InputProps = ComponentProps<'input'> & {
 	helperText?: string;
@@ -29,7 +29,7 @@ const Input = ({
 					data-helpertext={!!helperText}
 					type={type}
 					className={cn(
-						'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm data-[helpertext=true]:border-error',
+						'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-default disabled:opacity-50 md:text-sm data-[helpertext=true]:border-error focus:border-sky-500',
 						className,
 					)}
 					ref={ref}
@@ -57,4 +57,14 @@ const Input = ({
 };
 Input.displayName = 'Input';
 
-export { Input };
+type InputContainerProps = {
+	children: ReactNode;
+};
+
+const InputContainer = ({ children }: InputContainerProps) => {
+	return <div className="space-y-2">{children}</div>;
+};
+
+InputContainer.displayName = 'InputContainer';
+
+export { Input, InputContainer };

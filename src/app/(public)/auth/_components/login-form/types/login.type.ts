@@ -1,4 +1,4 @@
-import type { FetcherResponse } from '@/utils/fetcher';
+import type { FetcherResponse } from '@/utils/api';
 
 export type LoginService = {
 	login: (params: LoginInput) => Promise<FetcherResponse<LoginOutput>>;

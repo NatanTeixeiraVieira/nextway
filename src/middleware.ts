@@ -28,6 +28,11 @@ const publicRoutes: RouteConfig[] = [
 		redirectTo: redirectWhenAuthenticated,
 		includes: true,
 	},
+	{
+		path: '/tenant/register',
+		redirectTo: redirectWhenAuthenticated,
+		includes: true,
+	},
 ];
 
 export const middleware = async (request: NextRequest) => {

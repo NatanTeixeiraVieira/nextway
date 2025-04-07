@@ -1,6 +1,6 @@
 import { AppError } from '@/errors/error';
 
-const baseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
+let baseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
 
 export type FetcherResponse<R = unknown> = {
 	data: R | null;
@@ -11,6 +11,7 @@ type Body = Record<string, unknown>;
 
 type Options = Omit<RequestInit, 'method'> & {
 	disableRefresh?: boolean;
+	baseUrl?: string;
 };
 
 type UpsertOptions = Omit<Options, 'body'>;
@@ -38,6 +39,8 @@ export const api: Api = {
 		url: string,
 		options?: Options,
 	): Promise<FetcherResponse<Res>> => {
+		applyInitialConfigs({ url: options?.baseUrl });
+
 		const init = initHandling(options);
 		let res = await fetch(`${baseUrl}${url}`, init);
 
@@ -53,6 +56,8 @@ export const api: Api = {
 		body?: Body,
 		options?: UpsertOptions,
 	): Promise<FetcherResponse<Res>> => {
+		applyInitialConfigs({ url: options?.baseUrl });
+
 		const init = upsertInitHandling(body, options);
 		let res = await fetch(`${baseUrl}${url}`, {
 			...init,
@@ -71,6 +76,8 @@ export const api: Api = {
 		body?: Body,
 		options?: UpsertOptions,
 	): Promise<FetcherResponse<Res>> => {
+		applyInitialConfigs({ url: options?.baseUrl });
+
 		const init = upsertInitHandling(body, options);
 		let res = await fetch(`${baseUrl}${url}`, {
 			...init,
@@ -88,6 +95,8 @@ export const api: Api = {
 		url: string,
 		options?: Options,
 	): Promise<FetcherResponse<Res>> => {
+		applyInitialConfigs({ url: options?.baseUrl });
+
 		const deleteOptions: Options = {
 			...options,
 		};
@@ -121,7 +130,8 @@ export const api: Api = {
 const initHandling = (options?: Options): RequestInit => {
 	const init: RequestInit = {
 		...options,
-		credentials: 'include',
+		// TODO Add test to the credentials override if it is provided
+		credentials: options?.credentials ?? 'include',
 	};
 
 	if (Object.keys(init.headers ?? {}).length === 0) {
@@ -168,23 +178,20 @@ const responseHandling = async <Res = unknown>(
 		);
 	}
 
-	if (
-		!res.headers.get('content-length') ||
-		res.headers.get('content-length') === '0'
-	) {
+	// TODO Add test to the try catch code
+	try {
+		const response = await res.json();
+
+		return {
+			response: res,
+			data: response,
+		};
+	} catch (_error) {
 		return {
 			response: res,
 			data: null,
 		};
 	}
-
-	const response = await res.json();
-
-	return {
-		// headers: res.headers,
-		response: res,
-		data: response,
-	};
 };
 
 const handleAuthError = async (
@@ -219,4 +226,11 @@ const handleAuthError = async (
 	}
 
 	return mainRequestResponse;
+};
+
+// TODO Add test to the base url override
+const applyInitialConfigs = ({ url }: { url?: string }) => {
+	if (!url) return;
+
+	baseUrl = url;
 };
