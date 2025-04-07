@@ -1,136 +1,102 @@
 'use client';
 
-import { Phone, User } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input, InputContainer } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cpfMask, phoneNumberMask } from '@/utils/masks';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import type React from 'react';
-import { type JSX, useState } from 'react';
-import type {
-	FormErrors,
-	FormProps,
-	RegisterFormData,
-} from '../types/register-tenant.type';
+import type { JSX } from 'react';
+import { useForm } from 'react-hook-form';
+import { registerTenantResponsibleSchema } from './schemas/register-tenant-responsible.schema';
+import type { RegisterTenantResponsibleFormData } from './types/register-tenant-responsible-form-data.type';
 
-export default function ResponsibleForm({
-	formData,
-	updateFormData,
-	nextStep,
-	prevStep,
-}: FormProps): JSX.Element {
-	const [errors, setErrors] = useState<FormErrors>({});
+export default function ResponsibleForm(): JSX.Element {
+	const router = useRouter();
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-		e.preventDefault();
+	const {
+		register,
+		handleSubmit: submit,
+		formState: { errors },
+		setValue,
+	} = useForm<RegisterTenantResponsibleFormData>({
+		resolver: zodResolver(registerTenantResponsibleSchema),
+		defaultValues: {
+			name: '',
+			cpf: '',
+			phoneNumber: '',
+		},
+	});
 
-		// Validate form
-		const newErrors: FormErrors = {};
-		if (!formData.name) newErrors.name = 'Nome é obrigatório';
-		if (!formData.cpf) newErrors.cpf = 'CPF é obrigatório';
-		if (!formData.responsiblePhoneNumber)
-			newErrors.responsiblePhoneNumber = 'Telefone é obrigatório';
-
-		if (Object.keys(newErrors).length > 0) {
-			setErrors(newErrors);
-			return;
-		}
-
-		nextStep();
+	const handleCpfChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const cpfMasked = cpfMask(event.target.value);
+		setValue('cpf', cpfMasked);
 	};
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-		const { name, value } = e.target;
-		updateFormData({ [name as keyof RegisterFormData]: value });
-
-		// Clear error when field is filled
-		if (errors[name]) {
-			setErrors((prev) => {
-				const newErrors = { ...prev };
-				delete newErrors[name];
-				return newErrors;
-			});
-		}
+	const handlePhoneNumberChange = (
+		event: React.ChangeEvent<HTMLInputElement>,
+	) => {
+		const phoneNumberMasked = phoneNumberMask(event.target.value);
+		setValue('phoneNumber', phoneNumberMasked);
 	};
+
+	const handleSubmit = submit((data) => {
+		const storedData = sessionStorage.getItem('register-tenant');
+		if (!storedData) return;
+
+		const parsedStoredData = JSON.parse(storedData);
+
+		sessionStorage.setItem(
+			'register-tenant',
+			JSON.stringify({ ...parsedStoredData, ...data }),
+		);
+
+		router.push('/tenant/register/establishment');
+	});
 
 	return (
 		<form onSubmit={handleSubmit} className="space-y-4">
-			<div>
-				<label className="block text-sm font-medium text-gray-700 mb-1">
-					Nome completo
-				</label>
-				<div className="relative">
-					<User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-					<input
-						type="text"
-						name="name"
-						placeholder="Digite seu nome completo"
-						value={formData.name}
-						onChange={handleChange}
-						className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.name ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:border-sky-500`}
-					/>
-				</div>
-				{errors.name && (
-					<p className="text-red-500 text-xs mt-1">{errors.name}</p>
-				)}
-			</div>
-
-			<div>
-				<label className="block text-sm font-medium text-gray-700 mb-1">
-					CPF
-				</label>
-				<input
+			<InputContainer>
+				<Label htmlFor="name">Nome do responsável</Label>
+				<Input
+					id="name"
 					type="text"
-					name="cpf"
-					placeholder="Digite seu CPF"
-					value={formData.cpf}
-					onChange={handleChange}
-					className={`w-full px-4 py-3 rounded-xl border ${errors.cpf ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:border-sky-500`}
-					maxLength={14}
+					placeholder="Exemplo: João da Silva"
+					{...register('name')}
+					helperText={errors.name?.message}
 				/>
-				{errors.cpf && (
-					<p className="text-red-500 text-xs mt-1">{errors.cpf}</p>
-				)}
-			</div>
+			</InputContainer>
 
-			<div>
-				<label className="block text-sm font-medium text-gray-700 mb-1">
-					Telefone
-				</label>
-				<div className="relative">
-					<Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-					<input
-						type="tel"
-						name="responsiblePhoneNumber"
-						placeholder="(00) 00000-0000"
-						value={formData.responsiblePhoneNumber}
-						onChange={handleChange}
-						className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.responsiblePhoneNumber ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:border-sky-500`}
-						maxLength={15}
-					/>
-				</div>
-				{errors.responsiblePhoneNumber && (
-					<p className="text-red-500 text-xs mt-1">
-						{errors.responsiblePhoneNumber}
-					</p>
-				)}
-			</div>
+			<InputContainer>
+				<Label htmlFor="cpf">CPF do responsável</Label>
+				<Input
+					id="cpf"
+					type="text"
+					placeholder="Exemplo: 111.222.333-44"
+					{...register('cpf', { onChange: handleCpfChange })}
+					helperText={errors.cpf?.message}
+				/>
+			</InputContainer>
 
-			<div className="flex gap-4 mt-6">
-				<button
-					type="button"
-					onClick={prevStep}
-					className="w-full bg-gray-100 text-gray-700 py-3 rounded-xl font-medium
-                   hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2
-                   transition-colors"
-				>
-					Voltar
-				</button>
-				<button
-					type="submit"
-					className="w-full bg-sky-500 text-white py-3 rounded-xl font-medium
-                   hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2
-                   transition-colors"
-				>
-					Próximo
-				</button>
-			</div>
+			<InputContainer>
+				<Label htmlFor="phoneNumber">Telefone do responsável</Label>
+				<Input
+					id="phoneNumber"
+					type="text"
+					placeholder="Exemplo: +55 (00) 91111-2222"
+					{...register('phoneNumber', { onChange: handlePhoneNumberChange })}
+					helperText={errors.phoneNumber?.message}
+				/>
+			</InputContainer>
+
+			<Button
+				type="submit"
+				className="w-full bg-gradient-to-r from-sky-500 to-sky-600 py-0"
+				data-testid="register-submit-button"
+			>
+				Próximo
+			</Button>
 		</form>
 	);
 }

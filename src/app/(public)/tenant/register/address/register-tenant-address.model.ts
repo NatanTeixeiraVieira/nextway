@@ -1,7 +1,7 @@
 import { getInfosByZipcode } from '@/services/zipcode.service';
 import { zipcodeMask } from '@/utils/masks';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import type { RegisterTenatFormData } from '../types/register-tenant.type';
@@ -67,8 +67,8 @@ export const useRegisterTenantAddress = () => {
 		setValue('street', street);
 	};
 
-	const handleSubmit = submit((values) => {
-		sessionStorage.setItem('register-tenant', JSON.stringify(values));
+	const handleSubmit = submit((data) => {
+		sessionStorage.setItem('register-tenant', JSON.stringify(data));
 		router.push('/tenant/register/responsible');
 	});
 
