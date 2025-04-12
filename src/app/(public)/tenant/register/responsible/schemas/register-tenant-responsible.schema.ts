@@ -10,7 +10,7 @@ export const registerTenantResponsibleSchema = z.object({
 		),
 	// TODO Add cpf number validation
 	cpf: commonFieldSchema('O CPF é obrigatório.').length(14, 'CPF inválido'),
-	phoneNumber: commonFieldSchema('O telefone é obrigatório.').length(
+	responsiblePhoneNumber: commonFieldSchema('O telefone é obrigatório.').length(
 		19,
 		'Telefone inválido',
 	),

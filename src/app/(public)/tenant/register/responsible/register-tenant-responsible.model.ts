@@ -1,12 +1,15 @@
 import { cpfMask, phoneNumberMask } from '@/utils/masks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTenantFormData } from '../hooks/use-tenant-form-data';
 import { registerTenantResponsibleSchema } from './schemas/register-tenant-responsible.schema';
 import type { RegisterTenantResponsibleFormData } from './types/register-tenant-responsible-form-data.type';
 
 export const useRegisterTenantResponsible = () => {
 	const router = useRouter();
+	const { getFormData } = useTenantFormData();
 
 	const {
 		register,
@@ -18,31 +21,40 @@ export const useRegisterTenantResponsible = () => {
 		defaultValues: {
 			name: '',
 			cpf: '',
-			phoneNumber: '',
+			responsiblePhoneNumber: '',
 		},
 	});
+
+	useEffect(() => {
+		const formData = getFormData();
+
+		if (formData) {
+			setValue('cpf', formData.cpf || '');
+			setValue('name', formData.name || '');
+			setValue('responsiblePhoneNumber', formData.responsiblePhoneNumber || '');
+		}
+	}, [setValue, getFormData]);
 
 	const handleCpfChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const cpfMasked = cpfMask(event.target.value);
 		setValue('cpf', cpfMasked);
 	};
 
-	const handlePhoneNumberChange = (
+	const handleResponsiblePhoneNumberChange = (
 		event: React.ChangeEvent<HTMLInputElement>,
 	) => {
 		const phoneNumberMasked = phoneNumberMask(event.target.value);
-		setValue('phoneNumber', phoneNumberMasked);
+		setValue('responsiblePhoneNumber', phoneNumberMasked);
 	};
 
 	const handleSubmit = submit((data) => {
-		const storedData = sessionStorage.getItem('register-tenant');
-		if (!storedData) return;
+		const formData = getFormData();
 
-		const parsedStoredData = JSON.parse(storedData);
+		if (!formData) return;
 
 		sessionStorage.setItem(
 			'register-tenant',
-			JSON.stringify({ ...parsedStoredData, ...data }),
+			JSON.stringify({ ...formData, ...data }),
 		);
 
 		router.push('/tenant/register/establishment');
@@ -52,7 +64,7 @@ export const useRegisterTenantResponsible = () => {
 		errors,
 		register,
 		handleCpfChange,
-		handlePhoneNumberChange,
+		handleResponsiblePhoneNumberChange,
 		handleSubmit,
 	};
 };

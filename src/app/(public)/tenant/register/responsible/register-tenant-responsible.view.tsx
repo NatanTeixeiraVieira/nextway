@@ -13,7 +13,7 @@ export default function RegisterTenantResponsibleView(
 	const {
 		errors,
 		handleCpfChange,
-		handlePhoneNumberChange,
+		handleResponsiblePhoneNumberChange,
 		handleSubmit,
 		register,
 	} = props;
@@ -43,13 +43,15 @@ export default function RegisterTenantResponsibleView(
 			</InputContainer>
 
 			<InputContainer>
-				<Label htmlFor="phoneNumber">Telefone do responsável</Label>
+				<Label htmlFor="responsiblePhoneNumber">Telefone do responsável</Label>
 				<Input
-					id="phoneNumber"
+					id="responsiblePhoneNumber"
 					type="text"
 					placeholder="Exemplo: +55 (00) 91111-2222"
-					{...register('phoneNumber', { onChange: handlePhoneNumberChange })}
-					helperText={errors.phoneNumber?.message}
+					{...register('responsiblePhoneNumber', {
+						onChange: handleResponsiblePhoneNumberChange,
+					})}
+					helperText={errors.responsiblePhoneNumber?.message}
 				/>
 			</InputContainer>
 

@@ -4,12 +4,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import type { RegisterTenatFormData } from '../types/register-tenant.type';
+import { useTenantFormData } from '../hooks/use-tenant-form-data';
 import { registerTenantAddressSchema } from './schemas/register-tenant-address.schema';
 import type { RegisterTenantAddressFormData } from './types/register-tenant-address-form-data.type';
 
 export const useRegisterTenantAddress = () => {
 	const router = useRouter();
+	const { getFormData } = useTenantFormData();
 
 	const {
 		register,
@@ -30,18 +31,18 @@ export const useRegisterTenantAddress = () => {
 	});
 
 	useEffect(() => {
-		const storedData = sessionStorage.getItem('register-tenant');
-		if (storedData) {
-			const parsedData: RegisterTenatFormData = JSON.parse(storedData);
-			setValue('zipcode', parsedData.zipcode || '');
-			setValue('state', parsedData.state || '');
-			setValue('city', parsedData.city || '');
-			setValue('neighborhood', parsedData.neighborhood || '');
-			setValue('street', parsedData.street || '');
-			setValue('number', parsedData.number || '');
-			setValue('complement', parsedData.complement || '');
+		const formData = getFormData();
+
+		if (formData) {
+			setValue('zipcode', formData.zipcode || '');
+			setValue('state', formData.state || '');
+			setValue('city', formData.city || '');
+			setValue('neighborhood', formData.neighborhood || '');
+			setValue('street', formData.street || '');
+			setValue('number', formData.number || '');
+			setValue('complement', formData.complement || '');
 		}
-	}, [setValue]);
+	}, [setValue, getFormData]);
 
 	const handleZipcodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const zipcodeMasked = zipcodeMask(event.target.value);
