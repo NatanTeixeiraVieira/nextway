@@ -10,7 +10,7 @@ import type { RegisterTenantAddressFormData } from './types/register-tenant-addr
 
 export const useRegisterTenantAddress = () => {
 	const router = useRouter();
-	const { getFormData } = useTenantFormData();
+	const { getFormData, setFormData } = useTenantFormData();
 
 	const {
 		register,
@@ -69,7 +69,7 @@ export const useRegisterTenantAddress = () => {
 	};
 
 	const handleSubmit = submit((data) => {
-		sessionStorage.setItem('register-tenant', JSON.stringify(data));
+		setFormData(data);
 		router.push('/tenant/register/responsible');
 	});
 

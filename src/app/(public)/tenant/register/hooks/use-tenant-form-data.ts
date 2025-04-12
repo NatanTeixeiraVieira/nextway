@@ -9,5 +9,14 @@ export const useTenantFormData = () => {
 		return parsedData;
 	};
 
-	return { getFormData };
+	const setFormData = (data: Partial<RegisterTenatFormData>) => {
+		const formData = getFormData() ?? {};
+
+		sessionStorage.setItem(
+			'register-tenant',
+			JSON.stringify({ ...formData, ...data }),
+		);
+	};
+
+	return { getFormData, setFormData };
 };

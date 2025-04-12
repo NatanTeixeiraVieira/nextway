@@ -15,6 +15,7 @@ export type RegisterTenatFormData = {
 
 	// Establishment
 	cnpj: string;
+	corporateReason: string;
 	establishmentName: string;
 	establishmentPhoneNumber: string;
 

@@ -9,7 +9,7 @@ import type { RegisterTenantResponsibleFormData } from './types/register-tenant-
 
 export const useRegisterTenantResponsible = () => {
 	const router = useRouter();
-	const { getFormData } = useTenantFormData();
+	const { getFormData, setFormData } = useTenantFormData();
 
 	const {
 		register,
@@ -48,14 +48,7 @@ export const useRegisterTenantResponsible = () => {
 	};
 
 	const handleSubmit = submit((data) => {
-		const formData = getFormData();
-
-		if (!formData) return;
-
-		sessionStorage.setItem(
-			'register-tenant',
-			JSON.stringify({ ...formData, ...data }),
-		);
+		setFormData(data);
 
 		router.push('/tenant/register/establishment');
 	});
