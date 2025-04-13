@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
+import type { ActivateAccountService } from './_types/activate-account.type';
 import type { ActivateAccountParams } from './page';
-import type { ActivateAccountService } from './types/activate-account.type';
 
 type ActivateAccountModelProps = {
 	params: ActivateAccountParams['params'];

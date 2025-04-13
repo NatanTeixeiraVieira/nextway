@@ -3,7 +3,7 @@ import type {
 	ActivateAccountInput,
 	ActivateAccountOutput,
 	ActivateAccountService,
-} from '../types/activate-account.type';
+} from '../_types/activate-account.type';
 
 export const activateAccountService: ActivateAccountService = {
 	checkEmail: async (

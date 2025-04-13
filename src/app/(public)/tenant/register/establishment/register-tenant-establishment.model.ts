@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useTenantFormData } from '../hooks/use-tenant-form-data';
+import { useTenantFormData } from '../_hooks/use-tenant-form-data';
 import { registerTenantEstablishmentSchema } from './schemas/register-tenant-establishment.schema';
 import type { RegisterTenantEstablishmentFormData } from './types/register-tenant-establishment-form-data.type';
 

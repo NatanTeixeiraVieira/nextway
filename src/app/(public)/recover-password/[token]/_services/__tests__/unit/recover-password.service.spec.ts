@@ -3,7 +3,7 @@ import { api } from '@/utils/api';
 import type {
 	ChangePasswordInput,
 	VerifyTokenInput,
-} from '../../../types/recover-password.type';
+} from '../../../_types/recover-password.type';
 import { recoverPasswordService } from '../../recover-password.service';
 
 jest.mock('@/utils/api');

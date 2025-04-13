@@ -3,7 +3,7 @@ import type {
 	RegisterInput,
 	RegisterOutput,
 	RegisterService,
-} from '../types/register.type';
+} from '../_types/register.type';
 
 export const registerService: RegisterService = {
 	register: async (

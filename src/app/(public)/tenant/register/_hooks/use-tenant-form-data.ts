@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import type { RegisterTenatFormData } from '../types/register-tenant.type';
+import type { RegisterTenatFormData } from '../_types/register-tenant.type';
 
 export const useTenantFormData = () => {
 	const getFormData = useCallback(() => {

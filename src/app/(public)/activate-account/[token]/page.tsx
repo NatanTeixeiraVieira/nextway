@@ -1,5 +1,5 @@
+import { activateAccountService } from './_services/activate-account.service';
 import { activateAccount } from './activate-account.model';
-import { activateAccountService } from './services/activate-account.service';
 
 export type ActivateAccountParams = {
 	params: Promise<{

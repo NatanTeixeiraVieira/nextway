@@ -1,5 +1,5 @@
+import type { RecoverPasswordService } from './_types/recover-password.type';
 import type { RecoverPasswordParams } from './page';
-import type { RecoverPasswordService } from './types/recover-password.type';
 
 type RecoverPasswordModelProps = {
 	params: RecoverPasswordParams['params'];

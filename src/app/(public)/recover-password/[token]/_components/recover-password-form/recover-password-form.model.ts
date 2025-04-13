@@ -8,9 +8,9 @@ import { useRouter } from 'next/navigation';
 import { use } from 'react';
 import { useForm } from 'react-hook-form';
 import type { RecoverPasswordProps } from '.';
-import { recoverPasswordSchema } from '../../schemas/recover-password.schema';
-import type { RecoverPasswordFormData } from '../../types/recover-password-form-date.type';
-import type { RecoverPasswordService } from '../../types/recover-password.type';
+import { recoverPasswordSchema } from '../../_schemas/recover-password.schema';
+import type { RecoverPasswordFormData } from '../../_types/recover-password-form-date.type';
+import type { RecoverPasswordService } from '../../_types/recover-password.type';
 
 export type RecoverPasswordModelProps = {
 	params: RecoverPasswordProps['params'];

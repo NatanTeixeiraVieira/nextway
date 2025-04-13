@@ -1,6 +1,6 @@
+import { recoverPasswordService } from './_services/recover-password.service';
 import { recoverPassword } from './recover-password.model';
 import RecoverPasswordView from './recover-password.view';
-import { recoverPasswordService } from './services/recover-password.service';
 
 export type RecoverPasswordParams = {
 	params: Promise<{

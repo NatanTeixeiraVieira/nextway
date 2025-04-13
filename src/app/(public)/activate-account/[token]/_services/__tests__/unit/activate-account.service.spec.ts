@@ -1,5 +1,5 @@
 import { api } from '@/utils/api';
-import type { ActivateAccountInput } from '../../../types/activate-account.type';
+import type { ActivateAccountInput } from '../../../_types/activate-account.type';
 import { activateAccountService } from '../../activate-account.service';
 
 jest.mock('@/utils/api');

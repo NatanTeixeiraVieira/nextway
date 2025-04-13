@@ -6,7 +6,7 @@ import type {
 	RecoverPasswordService,
 	VerifyTokenInput,
 	VerifyTokenOutput,
-} from '../types/recover-password.type';
+} from '../_types/recover-password.type';
 
 export const recoverPasswordService: RecoverPasswordService = {
 	verifyToken: async (

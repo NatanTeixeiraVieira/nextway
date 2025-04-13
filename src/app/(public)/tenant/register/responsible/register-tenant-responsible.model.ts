@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useTenantFormData } from '../hooks/use-tenant-form-data';
+import { useTenantFormData } from '../_hooks/use-tenant-form-data';
 import { registerTenantResponsibleSchema } from './schemas/register-tenant-responsible.schema';
 import type { RegisterTenantResponsibleFormData } from './types/register-tenant-responsible-form-data.type';
 
