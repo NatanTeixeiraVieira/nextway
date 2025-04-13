@@ -1,7 +1,5 @@
 import { z } from 'zod';
-
-export const commonFieldSchema = (requiredMessage: string) =>
-	z.string({ required_error: requiredMessage }).trim().min(1, requiredMessage);
+import { commonFieldSchema, isValidCPF } from './utils';
 
 export const authSchema = z.object({
 	email: commonFieldSchema('O email é obrigatório.').email('Email inválido.'),
@@ -9,4 +7,10 @@ export const authSchema = z.object({
 		8,
 		'A senha deve ter no mínimo 8 caracteres.',
 	),
+});
+
+export const cpf = z.object({
+	cpf: commonFieldSchema('O CPF é obrigatório.')
+		.length(14, 'CPF inválido')
+		.refine((value) => isValidCPF(value), 'CPF inválido.'),
 });

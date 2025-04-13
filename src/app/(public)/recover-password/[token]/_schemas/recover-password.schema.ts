@@ -1,4 +1,4 @@
-import { commonFieldSchema } from '@/validations/schemas';
+import { commonFieldSchema } from '@/validations/utils';
 import { z } from 'zod';
 
 // TODO: Create a global schema to password and recover password

@@ -1,4 +1,4 @@
-import { commonFieldSchema } from '@/validations/schemas';
+import { commonFieldSchema } from '@/validations/utils';
 import { z } from 'zod';
 
 export const registerTenantEstablishmentSchema = z.object({

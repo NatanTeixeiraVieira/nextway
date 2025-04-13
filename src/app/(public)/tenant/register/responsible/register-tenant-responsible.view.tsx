@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
 import { Input, InputContainer } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import ActionButtons from '../_components/action-buttons';
 import type { useRegisterTenantResponsible } from './register-tenant-responsible.model';
 
 type RegisterTenantResponsibleViewProps = ReturnType<
@@ -55,13 +55,7 @@ export default function RegisterTenantResponsibleView(
 				/>
 			</InputContainer>
 
-			<Button
-				type="submit"
-				className="w-full bg-gradient-to-r from-sky-500 to-sky-600 py-0"
-				data-testid="register-submit-button"
-			>
-				Próximo
-			</Button>
+			<ActionButtons />
 		</form>
 	);
 }
