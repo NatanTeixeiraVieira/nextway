@@ -10,14 +10,17 @@ export const useTenantFormData = () => {
 		return parsedData;
 	}, []);
 
-	const setFormData = (data: Partial<RegisterTenatFormData>) => {
-		const formData = getFormData() ?? {};
+	const setFormData = useCallback(
+		(data: Partial<RegisterTenatFormData>) => {
+			const formData = getFormData() ?? {};
 
-		sessionStorage.setItem(
-			'register-tenant',
-			JSON.stringify({ ...formData, ...data }),
-		);
-	};
+			sessionStorage.setItem(
+				'register-tenant',
+				JSON.stringify({ ...formData, ...data }),
+			);
+		},
+		[getFormData],
+	);
 
 	return { getFormData, setFormData };
 };
