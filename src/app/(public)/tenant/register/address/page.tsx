@@ -1,10 +1,5 @@
-'use client';
-
-import { useRegisterTenantAddress } from './register-tenant-address.model';
-import RegisterTenantAddressView from './register-tenant-address.view';
+import RegisterTenantVM from './_mvvm/register-tenant-address.vm';
 
 export default function AddressPage() {
-	const methods = useRegisterTenantAddress();
-
-	return <RegisterTenantAddressView {...methods} />;
+	return <RegisterTenantVM />;
 }
