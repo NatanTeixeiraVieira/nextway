@@ -1,3 +1,3 @@
 import { authSchema } from '@/validations/schemas';
 
-export const loginFormSchema = authSchema;
+export const registerTenantLoginSchema = authSchema;

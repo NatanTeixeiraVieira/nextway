@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { usePasswordInput } from '../../hooks/use-password-input';
+import { usePasswordInput } from '../../../../../hooks/use-password-input';
 import { loginFormSchema } from './schemas/login-form.schema';
 import type { LoginFormData } from './types/login-form-data.type';
 import type { LoginService } from './types/login.type';

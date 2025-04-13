@@ -1,5 +1,5 @@
-import { usePasswordInput } from '@/app/(public)/auth/hooks/use-password-input';
 import type { AppError } from '@/errors/error';
+import { usePasswordInput } from '@/hooks/use-password-input';
 import { useToast } from '@/hooks/use-toast';
 import { requestErrorHandling } from '@/utils/error-handling';
 import { zodResolver } from '@hookform/resolvers/zod';

@@ -31,7 +31,6 @@ export const useRegisterTenantEstablishment = ({ cnpjService }: Props) => {
 		},
 	});
 
-	console.log('🚀 ~ useRegisterTenantEstablishment ~ errors:', errors);
 	useEffect(() => {
 		const formData = getFormData();
 
