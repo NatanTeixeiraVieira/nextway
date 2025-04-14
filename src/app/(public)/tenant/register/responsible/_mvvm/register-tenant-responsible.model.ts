@@ -3,13 +3,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useTenantFormData } from '../_hooks/use-tenant-form-data';
-import { registerTenantResponsibleSchema } from './schemas/register-tenant-responsible.schema';
-import type { RegisterTenantResponsibleFormData } from './types/register-tenant-responsible-form-data.type';
+import { useBlockStep } from '../../_hooks/use-block-form-step';
+import { useTenantFormData } from '../../_hooks/use-tenant-form-data';
+import { registerTenantResponsibleSchema } from '../_schemas/register-tenant-responsible.schema';
+import type { RegisterTenantResponsibleFormData } from '../_types/register-tenant-responsible-form-data.type';
 
 export const useRegisterTenantResponsible = () => {
 	const router = useRouter();
 	const { getFormData, setFormData } = useTenantFormData();
+	const { blockStepByFormIsComplete } = useBlockStep();
 
 	const {
 		register,
@@ -24,6 +26,12 @@ export const useRegisterTenantResponsible = () => {
 			responsiblePhoneNumber: '',
 		},
 	});
+
+	// useEffect(() => {
+	// 	const schemaKeys = getSchemaKeys(registerTenantAddressSchema);
+
+	// 	blockStepByFormIsComplete(schemaKeys);
+	// }, [blockStepByFormIsComplete]);
 
 	useEffect(() => {
 		const formData = getFormData();

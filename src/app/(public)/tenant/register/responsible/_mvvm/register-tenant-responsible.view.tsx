@@ -1,6 +1,6 @@
 import { Input, InputContainer } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import ActionButtons from '../_components/action-buttons';
+import ActionButtons from '../../_components/action-buttons';
 import type { useRegisterTenantResponsible } from './register-tenant-responsible.model';
 
 type RegisterTenantResponsibleViewProps = ReturnType<

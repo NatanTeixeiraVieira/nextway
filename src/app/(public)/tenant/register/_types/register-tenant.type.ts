@@ -1,3 +1,5 @@
+export type RegisterTenantFormDataKeys = keyof Partial<RegisterTenatFormData>;
+
 export type RegisterTenatFormData = {
 	// Address
 	zipcode: string;

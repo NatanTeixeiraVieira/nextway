@@ -14,3 +14,10 @@ export const cpf = z.object({
 		.length(14, 'CPF inválido')
 		.refine((value) => isValidCPF(value), 'CPF inválido.'),
 });
+
+// Utility function to get schema keys as an array
+export const getSchemaKeys = <Shape extends z.ZodRawShape>(
+	schema: z.ZodObject<Shape>,
+) => {
+	return Object.keys(schema.keyof().Values);
+};

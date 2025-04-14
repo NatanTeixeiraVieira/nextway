@@ -1,10 +1,5 @@
-'use client';
-
-import { useRegisterTenantResponsible } from './register-tenant-responsible.model';
-import RegisterTenantResponsibleView from './register-tenant-responsible.view';
+import ResponsibleVM from './_mvvm/register-tenant-responsible.vm';
 
 export default function ResponsiblePage() {
-	const methods = useRegisterTenantResponsible();
-
-	return <RegisterTenantResponsibleView {...methods} />;
+	return <ResponsibleVM />;
 }
