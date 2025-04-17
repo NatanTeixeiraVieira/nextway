@@ -3,15 +3,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useBlockStep } from '../../_hooks/use-block-form-step';
-import { useTenantFormData } from '../../_hooks/use-tenant-form-data';
+import { setFormDataCookies } from '../../_actions/tenant-form-data.action';
 import { registerTenantResponsibleSchema } from '../_schemas/register-tenant-responsible.schema';
 import type { RegisterTenantResponsibleFormData } from '../_types/register-tenant-responsible-form-data.type';
+import type { RegisterTenantResponsibleVMProps } from './register-tenant-responsible.vm';
 
-export const useRegisterTenantResponsible = () => {
+type Props = {
+	responsibleData: RegisterTenantResponsibleVMProps['formData'];
+};
+
+export const useRegisterTenantResponsible = ({ responsibleData }: Props) => {
 	const router = useRouter();
-	const { getFormData, setFormData } = useTenantFormData();
-	const { blockStepByFormIsComplete } = useBlockStep();
+	// const { getFormData, setFormData } = useTenantFormData();
+	// useValidateSteps(registerTenantAddressSchema, 'address');
 
 	const {
 		register,
@@ -34,14 +38,15 @@ export const useRegisterTenantResponsible = () => {
 	// }, [blockStepByFormIsComplete]);
 
 	useEffect(() => {
-		const formData = getFormData();
-
-		if (formData) {
-			setValue('cpf', formData.cpf || '');
-			setValue('name', formData.name || '');
-			setValue('responsiblePhoneNumber', formData.responsiblePhoneNumber || '');
+		if (responsibleData) {
+			setValue('cpf', responsibleData.cpf || '');
+			setValue('name', responsibleData.name || '');
+			setValue(
+				'responsiblePhoneNumber',
+				responsibleData.responsiblePhoneNumber || '',
+			);
 		}
-	}, [setValue, getFormData]);
+	}, [responsibleData, setValue]);
 
 	const handleCpfChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const cpfMasked = cpfMask(event.target.value);
@@ -55,8 +60,8 @@ export const useRegisterTenantResponsible = () => {
 		setValue('responsiblePhoneNumber', phoneNumberMasked);
 	};
 
-	const handleSubmit = submit((data) => {
-		setFormData(data);
+	const handleSubmit = submit(async (data) => {
+		await setFormDataCookies({ responsible: data });
 
 		router.push('/tenant/register/establishment');
 	});

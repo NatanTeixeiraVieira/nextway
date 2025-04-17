@@ -169,7 +169,6 @@ const upsertInitHandling = (body?: Body, upsertOptions?: UpsertOptions) => {
 const responseHandling = async <Res = unknown>(
 	res: Response,
 ): Promise<FetcherResponse<Res>> => {
-	console.log('🚀 ~ res:', res);
 	if (!res.ok) {
 		const errorData = await res.json();
 		throw new AppError(

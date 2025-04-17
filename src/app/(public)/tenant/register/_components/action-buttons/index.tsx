@@ -3,9 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 
-type ActionButtonsProps = {};
-
-export default function ActionButtons(props: ActionButtonsProps) {
+export default function ActionButtons() {
 	const router = useRouter();
 	const handleBackButtonClick = () => {
 		router.back();

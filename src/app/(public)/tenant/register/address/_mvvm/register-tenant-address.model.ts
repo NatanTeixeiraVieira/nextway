@@ -4,13 +4,20 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useTenantFormData } from '../../_hooks/use-tenant-form-data';
+import { setFormDataCookies } from '../../_actions/tenant-form-data.action';
 import { registerTenantAddressSchema } from '../_schemas/register-tenant-address.schema';
 import type { RegisterTenantAddressFormData } from '../_types/register-tenant-address-form-data.type';
+import type { RegisterTenantVMProps } from './register-tenant-address.vm';
 
-export const useRegisterTenantAddress = () => {
+type useRegisterTenantProps = {
+	addressData: RegisterTenantVMProps['addressData'];
+};
+
+export const useRegisterTenantAddress = ({
+	addressData,
+}: useRegisterTenantProps) => {
 	const router = useRouter();
-	const { getFormData, setFormData } = useTenantFormData();
+	// const { getFormData, setFormData } = useTenantFormData();
 
 	const {
 		register,
@@ -31,18 +38,16 @@ export const useRegisterTenantAddress = () => {
 	});
 
 	useEffect(() => {
-		const formData = getFormData();
-
-		if (formData) {
-			setValue('zipcode', formData.zipcode || '');
-			setValue('state', formData.state || '');
-			setValue('city', formData.city || '');
-			setValue('neighborhood', formData.neighborhood || '');
-			setValue('street', formData.street || '');
-			setValue('number', formData.number || '');
-			setValue('complement', formData.complement || '');
+		if (addressData) {
+			setValue('zipcode', addressData.zipcode || '');
+			setValue('state', addressData.state || '');
+			setValue('city', addressData.city || '');
+			setValue('neighborhood', addressData.neighborhood || '');
+			setValue('street', addressData.street || '');
+			setValue('number', addressData.number || '');
+			setValue('complement', addressData.complement || '');
 		}
-	}, [setValue, getFormData]);
+	}, [setValue, addressData]);
 
 	const handleZipcodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const zipcodeMasked = zipcodeMask(event.target.value);
@@ -68,8 +73,9 @@ export const useRegisterTenantAddress = () => {
 		setValue('street', street);
 	};
 
-	const handleSubmit = submit((data) => {
-		setFormData(data);
+	const handleSubmit = submit(async (data) => {
+		// setFormData(data);
+		await setFormDataCookies({ address: data });
 		router.push('/tenant/register/responsible');
 	});
 

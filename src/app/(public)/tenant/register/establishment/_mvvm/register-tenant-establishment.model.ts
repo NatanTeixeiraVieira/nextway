@@ -1,21 +1,22 @@
-import type { CnpjService } from '@/types/cnpj-service.type';
+import { getInfosByCnpjAction } from '@/actions/cnpj.action';
 import { cnpjMask, phoneNumberMask } from '@/utils/masks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useTenantFormData } from '../_hooks/use-tenant-form-data';
-import { registerTenantEstablishmentSchema } from './schemas/register-tenant-establishment.schema';
-import type { RegisterTenantEstablishmentFormData } from './types/register-tenant-establishment-form-data.type';
+import { setFormDataCookies } from '../../_actions/tenant-form-data.action';
+import { registerTenantEstablishmentSchema } from '../schemas/register-tenant-establishment.schema';
+import type { RegisterTenantEstablishmentFormData } from '../types/register-tenant-establishment-form-data.type';
+import type { RegisterTenantEstablishmentVMProps } from './register-tenant-establishment.vm';
 
 type Props = {
-	cnpjService: CnpjService;
+	establishmentData: RegisterTenantEstablishmentVMProps['formData'];
 };
 
-export const useRegisterTenantEstablishment = ({ cnpjService }: Props) => {
+export const useRegisterTenantEstablishment = ({
+	establishmentData,
+}: Props) => {
 	const router = useRouter();
-	const { getFormData, setFormData } = useTenantFormData();
-
 	const {
 		register,
 		handleSubmit: submit,
@@ -32,18 +33,16 @@ export const useRegisterTenantEstablishment = ({ cnpjService }: Props) => {
 	});
 
 	useEffect(() => {
-		const formData = getFormData();
-
-		if (formData) {
-			setValue('corporateReason', formData.corporateReason || '');
-			setValue('establishmentName', formData.establishmentName || '');
+		if (establishmentData) {
+			setValue('corporateReason', establishmentData.corporateReason || '');
+			setValue('establishmentName', establishmentData.establishmentName || '');
 			setValue(
 				'establishmentPhoneNumber',
-				formData.establishmentPhoneNumber || '',
+				establishmentData.establishmentPhoneNumber || '',
 			);
-			setValue('cnpj', formData.cnpj || '');
+			setValue('cnpj', establishmentData.cnpj || '');
 		}
-	}, [setValue, getFormData]);
+	}, [setValue, establishmentData]);
 
 	const handleCnpjBlur = async (
 		e: React.FocusEvent<HTMLInputElement>,
@@ -52,12 +51,11 @@ export const useRegisterTenantEstablishment = ({ cnpjService }: Props) => {
 
 		if (cnpj.length !== 14) return;
 
-		const { data } = await cnpjService.getInfosByCnpj(cnpj);
-		// const cnpjInfos = await getInfosByCnpj(cnpj);
+		const cnpjInfos = await getInfosByCnpjAction(cnpj);
 
-		if (!data) return;
+		if (!cnpjInfos) return;
 
-		setValue('corporateReason', data.corporateReason);
+		setValue('corporateReason', cnpjInfos.corporateReason);
 	};
 
 	const handleCnpjChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,8 +70,8 @@ export const useRegisterTenantEstablishment = ({ cnpjService }: Props) => {
 		setValue('establishmentPhoneNumber', phoneNumberMasked);
 	};
 
-	const handleSubmit = submit((data) => {
-		setFormData(data);
+	const handleSubmit = submit(async (data) => {
+		await setFormDataCookies({ establishment: data });
 
 		router.push('/tenant/register/login');
 	});

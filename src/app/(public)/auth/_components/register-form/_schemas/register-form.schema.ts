@@ -1,6 +1,6 @@
+import { authSchema } from '@/validations/schemas';
 import { commonFieldSchema } from '@/validations/utils';
 import { z } from 'zod';
-import { authSchema } from '../../../schemas/auth.schema';
 
 export const registerFormSchema = authSchema
 	.extend({

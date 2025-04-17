@@ -3,13 +3,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useTenantFormData } from '../_hooks/use-tenant-form-data';
-import { registerTenantLoginSchema } from './schemas/register-tenant-login.schema';
-import type { RegisterTenantLoginFormData } from './types/register-tenant-address-form-data.type';
+import { setFormDataCookies } from '../../_actions/tenant-form-data.action';
+import { registerTenantLoginSchema } from '../_schemas/register-tenant-login.schema';
+import type { RegisterTenantLoginFormData } from '../_types/register-tenant-address-form-data.type';
+import type { RegisterTenantLoginVMProps } from './register-tenant-login.vm';
 
-export const useRegisterTenantLogin = () => {
+type Props = {
+	loginData: RegisterTenantLoginVMProps['formData'];
+};
+
+export const useRegisterTenantLogin = ({ loginData }: Props) => {
 	const router = useRouter();
-	const { getFormData, setFormData } = useTenantFormData();
 
 	const {
 		register,
@@ -25,18 +29,16 @@ export const useRegisterTenantLogin = () => {
 	});
 
 	useEffect(() => {
-		const formData = getFormData();
-
-		if (formData) {
-			setValue('email', formData.email || '');
-			setValue('password', formData.password || '');
+		if (loginData) {
+			setValue('email', loginData.email || '');
+			setValue('password', loginData.password || '');
 		}
-	}, [setValue, getFormData]);
+	}, [setValue, loginData]);
 
 	const { passwordInputType, handleIconEyeClick } = usePasswordInput();
 
 	const handleSubmit = submit((data) => {
-		setFormData(data);
+		setFormDataCookies({ login: data });
 
 		router.push('/tenant/register/confirmation');
 	});

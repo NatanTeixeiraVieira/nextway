@@ -3,6 +3,7 @@ import './globals.css';
 
 import { Toaster } from '@/components/ui/toaster';
 import Providers from '@/providers/providers';
+import type { LayoutProps } from '@/types/utils.type';
 import { Poppins } from 'next/font/google';
 
 const poppins = Poppins({
@@ -20,11 +21,7 @@ export const metadata: Metadata = {
 		'Descubra o sistema de delivery multi-tenant mais eficiente! Gerencie pedidos, produtos, categorias e áreas de entrega em um só lugar. Ideal para negócios que desejam expandir com tecnologia de ponta.',
 };
 
-export default function RootLayout({
-	children,
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: LayoutProps) {
 	return (
 		<html lang="pt-BR" className={poppins.className}>
 			<body>

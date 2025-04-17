@@ -1,30 +1,35 @@
 export type RegisterTenantFormDataKeys = keyof Partial<RegisterTenatFormData>;
 
 export type RegisterTenatFormData = {
-	// Address
-	zipcode: string;
-	state: string;
-	city: string;
-	neighborhood: string;
-	street: string;
-	number: string;
-	complement: string;
+	address: {
+		zipcode: string;
+		state: string;
+		city: string;
+		neighborhood: string;
+		street: string;
+		number: string;
+		complement?: string;
+	};
 
-	// Responsible
-	name: string;
-	cpf: string;
-	responsiblePhoneNumber: string;
+	responsible: {
+		name: string;
+		cpf: string;
+		responsiblePhoneNumber: string;
+	};
 
-	// Establishment
-	cnpj: string;
-	corporateReason: string;
-	establishmentName: string;
-	establishmentPhoneNumber: string;
+	establishment: {
+		cnpj: string;
+		corporateReason: string;
+		establishmentName: string;
+		establishmentPhoneNumber: string;
+	};
 
-	// Login
-	email: string;
-	password: string;
+	login: {
+		email: string;
+		password: string;
+	};
 
-	// Confirmation
-	confirmationCode: string[];
+	confirmation: {
+		code: string[];
+	};
 };

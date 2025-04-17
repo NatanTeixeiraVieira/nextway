@@ -1,8 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { registerTenantCofirmationSchema } from './_schemas/register-tenant-confirmation.schema';
-import type { RegisterTenantConfirmationFormData } from './_types/register-tenant-confirmation-form-data.type';
+import { registerTenantCofirmationSchema } from '../_schemas/register-tenant-confirmation.schema';
+import type { RegisterTenantConfirmationFormData } from '../_types/register-tenant-confirmation-form-data.type';
 
 export const useRegisterTenantConfirmation = () => {
 	const form = useForm<RegisterTenantConfirmationFormData>({
@@ -43,9 +43,7 @@ export const useRegisterTenantConfirmation = () => {
 		// }
 	};
 
-	const handleSubmit = form.handleSubmit((data) => {
-		console.log('🚀 ~ handleSubmit ~ data:', data);
-	});
+	const handleSubmit = form.handleSubmit((data) => {});
 
 	return {
 		form,

@@ -1,10 +1,11 @@
-'use client';
+import { getFormDataCookies } from '../_actions/tenant-form-data.action';
+import { validateSteps } from '../_utils/validate-steps';
+import { registerTenantEstablishmentSchema } from '../establishment/schemas/register-tenant-establishment.schema';
+import RegisterTenantLoginVM from './_mvvm/register-tenant-login.vm';
 
-import { useRegisterTenantLogin } from './register-tenant-login.model';
-import RegisterTenantLoginView from './register-tenant-login.view';
+export default async function LoginPage() {
+	await validateSteps(registerTenantEstablishmentSchema, 'establishment');
+	const formData = await getFormDataCookies();
 
-export default function LoginPage() {
-	const methods = useRegisterTenantLogin();
-
-	return <RegisterTenantLoginView {...methods} />;
+	return <RegisterTenantLoginVM formData={formData?.login ?? null} />;
 }
