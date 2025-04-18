@@ -13,7 +13,7 @@ export default function ActionButtons() {
 		<div className="flex justify-between gap-4">
 			<Button
 				type="button"
-				className="flex-1 bg-gray-200 text-gray-700 py-3 font-medium"
+				className="flex-1 bg-gray-200 text-gray-700"
 				onClick={handleBackButtonClick}
 				data-testid="register-submit-button"
 			>
@@ -21,7 +21,7 @@ export default function ActionButtons() {
 			</Button>
 			<Button
 				type="submit"
-				className="flex-1 bg-gradient-to-r from-sky-500 to-sky-600 py-0"
+				className="flex-1"
 				data-testid="register-submit-button"
 			>
 				Próximo

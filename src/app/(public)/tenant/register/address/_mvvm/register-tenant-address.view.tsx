@@ -102,7 +102,7 @@ export default function RegisterTenantAddressView(
 
 			<Button
 				type="submit"
-				className="w-full bg-gradient-to-r from-sky-500 to-sky-600 py-0"
+				className="w-full"
 				data-testid="register-submit-button"
 			>
 				Próximo

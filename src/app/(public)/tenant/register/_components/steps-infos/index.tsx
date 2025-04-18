@@ -1,6 +1,8 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { usePathname, useRouter } from 'next/navigation';
+import { resetFormDataCookies } from '../../_actions/tenant-form-data.action';
 import ProgressSteps from '../progress-steps';
 
 const steps: string[] = [
@@ -47,14 +49,29 @@ const stepsInfos: Record<
 
 export default function StepsInfos() {
 	const pathname = usePathname();
+	const router = useRouter();
 	const segments = pathname.split('/').filter(Boolean);
 	const lastSegment = segments.at(-1) as (typeof stepsKeys)[number];
 
+	const handleResetForm = async () => {
+		await resetFormDataCookies();
+		router.push('/tenant/register/address');
+	};
+
 	return (
 		<>
-			<h1 className="text-2xl font-semibold text-gray-800 mb-2">
-				{stepsInfos[lastSegment].title}
-			</h1>
+			<div className="flex justify-between items-center mb-4">
+				<h1 className="text-2xl font-semibold text-gray-800">
+					{stepsInfos[lastSegment].title}
+				</h1>
+				<Button
+					variant="ghost"
+					onClick={handleResetForm}
+					className="p-0 text-sky-500"
+				>
+					Reiniciar
+				</Button>
+			</div>
 			<p className="text-gray-500 text-sm mb-6">
 				{stepsInfos[lastSegment].subtitle}
 			</p>

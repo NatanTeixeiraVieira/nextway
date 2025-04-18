@@ -21,3 +21,8 @@ export const setFormDataCookies = async (
 
 	cookieStore.set('register-tenant', JSON.stringify({ ...formData, ...data }));
 };
+
+export const resetFormDataCookies = async () => {
+	const cookiesStore = await cookies();
+	cookiesStore.delete('register-tenant');
+};
