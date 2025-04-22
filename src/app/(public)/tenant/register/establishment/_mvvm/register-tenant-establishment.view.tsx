@@ -74,6 +74,21 @@ export default function RegisterTenantEstablishment(
 				/>
 			</InputContainer>
 
+			<InputContainer>
+				<Label htmlFor="slug">URL do estabelecimento</Label>
+				<Input
+					id="slug"
+					type="text"
+					placeholder="Exemplo: pizzaria-do-joao"
+					{...register('slug')}
+					helperText={errors.slug?.message}
+				/>
+			</InputContainer>
+			<p className="text-xs !mt-1">
+				Esse é o nome que aparecerá no endereço da págiana, como
+				https://nextway.com.br/pizzaria-do-joao
+			</p>
+
 			<ActionButtons />
 		</form>
 	);

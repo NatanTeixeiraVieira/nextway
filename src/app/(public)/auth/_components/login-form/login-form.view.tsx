@@ -57,8 +57,8 @@ export default function LoginFormView(props: LoginFormViewProps) {
 				className="w-full bg-gradient-to-r from-sky-500 to-sky-600"
 				data-testid="login-submit-button"
 			>
-				{isPending && <Spinner />}
-				{!isPending && 'Entrar'}
+				{!isPending && <Spinner />}
+				{/* {!isPending && 'Entrar'} */}
 			</Button>
 		</form>
 	);

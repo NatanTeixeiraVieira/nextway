@@ -56,7 +56,7 @@ export const api: Api = {
 		body?: Body,
 		options?: UpsertOptions,
 	): Promise<FetcherResponse<Res>> => {
-		applyInitialConfigs({ url: options?.baseUrl });
+		console.log('🚀 ~ options:', options);
 
 		const init = upsertInitHandling(body, options);
 		let res = await fetch(`${baseUrl}${url}`, {

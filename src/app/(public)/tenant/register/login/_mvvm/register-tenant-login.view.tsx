@@ -1,3 +1,4 @@
+import Spinner from '@/components/spinner';
 import { Input, InputContainer } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import ActionButtons from '../../_components/action-buttons';
@@ -12,6 +13,7 @@ export default function RegisterTenantLoginView(
 		dirtyFields,
 		errors,
 		passwordInputType,
+		isPending,
 		handleIconEyeClick,
 		handleSubmit,
 		register,
@@ -44,7 +46,9 @@ export default function RegisterTenantLoginView(
 				/>
 			</InputContainer>
 
-			<ActionButtons />
+			<ActionButtons
+				nextStepButtonContent={isPending ? <Spinner /> : 'Verificar'}
+			/>
 		</form>
 	);
 }

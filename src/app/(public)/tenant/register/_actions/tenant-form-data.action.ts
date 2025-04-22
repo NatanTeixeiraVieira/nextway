@@ -11,15 +11,20 @@ export const getFormDataCookies = async () => {
 	return parsedData;
 };
 
-export const setFormDataCookies = async (
-	data: Partial<RegisterTenatFormData>,
-) => {
+type SetFormDataActionData = Partial<Omit<RegisterTenatFormData, 'login'>> & {
+	login?: boolean;
+};
+
+export const setFormDataCookies = async (data: SetFormDataActionData) => {
 	const [cookieStore, formData] = await Promise.all([
 		cookies(),
 		getFormDataCookies(),
 	]);
 
-	cookieStore.set('register-tenant', JSON.stringify({ ...formData, ...data }));
+	cookieStore.set('register-tenant', JSON.stringify({ ...formData, ...data }), {
+		maxAge: 60 * 30, // 30 minutes
+		httpOnly: true,
+	});
 };
 
 export const resetFormDataCookies = async () => {

@@ -1,6 +1,8 @@
+import type { FetcherResponse } from '@/utils/api';
+
 export type RegisterTenantFormDataKeys = keyof Partial<RegisterTenatFormData>;
 
-export type RegisterTenatFormData = {
+export type RegisterTenatFormData = Partial<{
 	address: {
 		zipcode: string;
 		state: string;
@@ -22,14 +24,46 @@ export type RegisterTenatFormData = {
 		corporateReason: string;
 		establishmentName: string;
 		establishmentPhoneNumber: string;
+		slug: string;
 	};
 
-	login: {
-		email: string;
-		password: string;
-	};
+	login: boolean;
 
 	confirmation: {
 		code: string[];
 	};
+}>;
+
+export type RegisterTenantService = {
+	register: (
+		params: RegisterTenantInput,
+	) => Promise<FetcherResponse<RegisterTenantOutput>>;
+};
+
+export type RegisterTenantOutput = {
+	id: string;
+};
+
+export type RegisterTenantInput = {
+	// Address
+	zipcode: string;
+	streetName: string;
+	neighborhood: string;
+	streetNumber: string;
+	complement?: string;
+
+	// Responsible infos
+	responsibleName: string;
+	responsibleCpf: string;
+	responsiblePhoneNumber: string;
+
+	// Establishment infos
+	cnpj: string;
+	establishmentName: string;
+	establishmentPhoneNumber: string;
+	slug: string;
+
+	// Login infos
+	email: string;
+	password: string;
 };

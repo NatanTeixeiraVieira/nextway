@@ -2,8 +2,15 @@
 
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import type { ReactNode } from 'react';
 
-export default function ActionButtons() {
+type ActionButtonsProps = {
+	nextStepButtonContent?: ReactNode;
+};
+
+export default function ActionButtons({
+	nextStepButtonContent = 'Próximo',
+}: ActionButtonsProps) {
 	const router = useRouter();
 	const handleBackButtonClick = () => {
 		router.back();
@@ -24,7 +31,7 @@ export default function ActionButtons() {
 				className="flex-1"
 				data-testid="register-submit-button"
 			>
-				Próximo
+				{nextStepButtonContent}
 			</Button>
 		</div>
 	);

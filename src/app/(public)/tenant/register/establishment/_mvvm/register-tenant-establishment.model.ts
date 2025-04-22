@@ -41,6 +41,7 @@ export const useRegisterTenantEstablishment = ({
 				establishmentData.establishmentPhoneNumber || '',
 			);
 			setValue('cnpj', establishmentData.cnpj || '');
+			setValue('slug', establishmentData.slug || '');
 		}
 	}, [setValue, establishmentData]);
 

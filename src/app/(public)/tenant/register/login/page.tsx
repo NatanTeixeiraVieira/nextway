@@ -7,5 +7,5 @@ export default async function LoginPage() {
 	await validateSteps(registerTenantEstablishmentSchema, 'establishment');
 	const formData = await getFormDataCookies();
 
-	return <RegisterTenantLoginVM formData={formData?.login ?? null} />;
+	return <RegisterTenantLoginVM formData={formData ?? null} />;
 }

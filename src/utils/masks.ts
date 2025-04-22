@@ -39,3 +39,19 @@ export const cnpjMask = (cnpj: string): string => {
 		.replace(/(\d{3})(\d{1,4})/, '$1/$2')
 		.replace(/(\d{4})(\d{1,2})$/, '$1-$2');
 };
+
+export const removeCnpjMask = (cnpj: string) => {
+	return cnpj.replace(/\D/g, '');
+};
+
+export const removeCpfMask = (cnpj: string) => {
+	return cnpj.replace(/\D/g, '');
+};
+
+export const removeZipcodeMask = (cnpj: string) => {
+	return cnpj.replace(/\D/g, '');
+};
+
+export const removePhoneNumberMask = (cnpj: string) => {
+	return cnpj.replace(/\D/g, '');
+};
