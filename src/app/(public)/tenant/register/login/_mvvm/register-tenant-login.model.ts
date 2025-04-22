@@ -33,7 +33,7 @@ export const useRegisterTenantLogin = ({
 	const { mutateAsync, isPending } = useMutation({
 		mutationFn: registerTenantService.register,
 		onSuccess: async () => {
-			await setFormDataCookies({ login: true });
+			await setFormDataCookies({ login: formData?.login });
 			router.push('/tenant/register/confirmation');
 		},
 		onError: (error: AppError) => {

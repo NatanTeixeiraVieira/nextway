@@ -45,7 +45,11 @@ export default function RegisterTenantConfirmation(
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
-										<InputOTP maxLength={6} {...field}>
+										<InputOTP
+											maxLength={6}
+											{...field}
+											onChange={(value) => field.onChange(value.toUpperCase())}
+										>
 											{Array.from({ length: 6 }).map((_, index) => (
 												<InputOTPGroup key={index.toString()}>
 													<InputOTPSlot

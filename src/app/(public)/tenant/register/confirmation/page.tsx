@@ -10,5 +10,7 @@ export default async function ConfirmationPage() {
 		throw new AppError(403, 'Forbidden', ErrorConstants.FORBIDDEN_FORM_STEP);
 	}
 
-	return <RegisterTenantConfirmationVM />;
+	return (
+		<RegisterTenantConfirmationVM loginData={registerTenantFormData.login} />
+	);
 }

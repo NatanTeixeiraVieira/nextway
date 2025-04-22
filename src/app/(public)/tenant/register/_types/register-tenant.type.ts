@@ -27,7 +27,9 @@ export type RegisterTenatFormData = Partial<{
 		slug: string;
 	};
 
-	login: boolean;
+	login: {
+		email: string;
+	};
 
 	confirmation: {
 		code: string[];

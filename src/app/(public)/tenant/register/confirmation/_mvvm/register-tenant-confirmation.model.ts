@@ -3,8 +3,13 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { registerTenantCofirmationSchema } from '../_schemas/register-tenant-confirmation.schema';
 import type { RegisterTenantConfirmationFormData } from '../_types/register-tenant-confirmation-form-data.type';
+import type { RegisterTenantConfirmationVMProps } from './register-tenant-confirmation.vm';
 
-export const useRegisterTenantConfirmation = () => {
+type Props = {
+	loginData: RegisterTenantConfirmationVMProps['loginData'];
+};
+
+export const useRegisterTenantConfirmation = ({ loginData }: Props) => {
 	const form = useForm<RegisterTenantConfirmationFormData>({
 		resolver: zodResolver(registerTenantCofirmationSchema),
 		defaultValues: {
@@ -43,7 +48,9 @@ export const useRegisterTenantConfirmation = () => {
 		// }
 	};
 
-	const handleSubmit = form.handleSubmit((data) => {});
+	const handleSubmit = form.handleSubmit((data) => {
+		console.log('🚀 ~ handleSubmit ~ data:', data);
+	});
 
 	return {
 		form,
