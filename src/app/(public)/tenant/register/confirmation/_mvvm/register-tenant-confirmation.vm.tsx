@@ -1,8 +1,9 @@
 'use client';
 
 import type { RegisterTenatFormData } from '../../_types/register-tenant.type';
+import { registerTenantConfirmationService } from '../_services/activate-account.service';
 import { useRegisterTenantConfirmation } from './register-tenant-confirmation.model';
-import RegisterTenantConfirmation from './register-tenant-confirmation.view';
+import RegisterTenantConfirmationView from './register-tenant-confirmation.view';
 
 export type RegisterTenantConfirmationVMProps = {
 	loginData: RegisterTenatFormData['login'] | null;
@@ -11,7 +12,10 @@ export type RegisterTenantConfirmationVMProps = {
 export default function RegisterTenantConfirmationVM({
 	loginData,
 }: RegisterTenantConfirmationVMProps) {
-	const methods = useRegisterTenantConfirmation({ loginData });
+	const methods = useRegisterTenantConfirmation({
+		loginData,
+		registerTenantConfirmationService,
+	});
 
-	return <RegisterTenantConfirmation {...methods} />;
+	return <RegisterTenantConfirmationView {...methods} />;
 }

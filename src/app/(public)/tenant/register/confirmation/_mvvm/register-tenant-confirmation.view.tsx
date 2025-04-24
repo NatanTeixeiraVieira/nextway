@@ -1,3 +1,4 @@
+import Spinner from '@/components/spinner';
 import type { useRegisterTenantConfirmation } from './register-tenant-confirmation.model';
 
 import { Button } from '@/components/ui/button';
@@ -15,15 +16,21 @@ import {
 } from '@/components/ui/input-otp';
 import { RefreshCw } from 'lucide-react';
 
-type RegisterTenantConfirmationProps = ReturnType<
+type RegisterTenantConfirmationViewProps = ReturnType<
 	typeof useRegisterTenantConfirmation
 >;
 
-export default function RegisterTenantConfirmation(
-	props: RegisterTenantConfirmationProps,
+export default function RegisterTenantConfirmationView(
+	props: RegisterTenantConfirmationViewProps,
 ) {
-	const { form, resendDisabled, countdown, handleResendCode, handleSubmit } =
-		props;
+	const {
+		form,
+		resendDisabled,
+		countdown,
+		isPending,
+		handleResendCode,
+		handleSubmit,
+	} = props;
 
 	return (
 		<div className="space-y-6">
@@ -86,7 +93,8 @@ export default function RegisterTenantConfirmation(
 						className="w-full bg-gradient-to-r from-sky-500 to-sky-600 py-0"
 						data-testid="register-submit-button"
 					>
-						Enviar
+						{isPending && <Spinner />}
+						{!isPending && 'Enviar'}
 					</Button>
 				</form>
 			</Form>
