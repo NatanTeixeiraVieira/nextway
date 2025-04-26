@@ -1,4 +1,5 @@
 import { getInfosByCnpjAction } from '@/actions/cnpj.action';
+import { useToast } from '@/hooks/use-toast';
 import { cnpjMask, phoneNumberMask } from '@/utils/masks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
@@ -32,6 +33,8 @@ export const useRegisterTenantEstablishment = ({
 		},
 	});
 
+	const { toast } = useToast();
+
 	useEffect(() => {
 		if (establishmentData) {
 			setValue('corporateReason', establishmentData.corporateReason || '');
@@ -52,11 +55,18 @@ export const useRegisterTenantEstablishment = ({
 
 		if (cnpj.length !== 14) return;
 
-		const cnpjInfos = await getInfosByCnpjAction(cnpj);
+		try {
+			const cnpjInfos = await getInfosByCnpjAction(cnpj);
+			if (!cnpjInfos) return;
 
-		if (!cnpjInfos) return;
-
-		setValue('corporateReason', cnpjInfos.corporateReason);
+			setValue('corporateReason', cnpjInfos.corporateReason);
+		} catch (_) {
+			toast({
+				variant: 'destructive',
+				className: 'get-establishment-cnpj-toast-error',
+				title: 'CNPJ inválido ou não encontrado',
+			});
+		}
 	};
 
 	const handleCnpjChange = (event: React.ChangeEvent<HTMLInputElement>) => {
