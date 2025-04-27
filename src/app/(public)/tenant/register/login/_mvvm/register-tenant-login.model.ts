@@ -11,6 +11,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { setFormDataCookies } from '../../_actions/tenant-form-data.action';
 import type { RegisterTenantService } from '../../_types/register-tenant.type';
@@ -52,6 +53,7 @@ export const useRegisterTenantLogin = ({
 		register,
 		handleSubmit: submit,
 		formState: { errors, dirtyFields },
+		setValue,
 	} = useForm<RegisterTenantLoginFormData>({
 		resolver: zodResolver(registerTenantLoginSchema),
 		defaultValues: {
@@ -61,6 +63,12 @@ export const useRegisterTenantLogin = ({
 	});
 
 	const { passwordInputType, handleIconEyeClick } = usePasswordInput();
+
+	useEffect(() => {
+		if (formData?.login?.email) {
+			setValue('email', formData.login.email || '');
+		}
+	}, [formData?.login?.email, setValue]);
 
 	const handleSubmit = submit(async (data) => {
 		if (
