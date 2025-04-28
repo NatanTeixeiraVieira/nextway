@@ -33,6 +33,13 @@ const publicRoutes: RouteConfig[] = [
 		redirectTo: redirectWhenAuthenticated,
 		includes: true,
 	},
+
+	// TODO Remove this route when the payment is ready
+	{
+		path: '/tenant/payment',
+		redirectTo: redirectWhenAuthenticated,
+		includes: true,
+	},
 ];
 
 export const middleware = async (request: NextRequest) => {

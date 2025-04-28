@@ -1,0 +1,13 @@
+.paymentForm {
+	h2 {
+		display: none;
+	}
+
+	form {
+		padding: 0 !important;
+
+		div {
+			margin-bottom: 0 !important;
+		}
+	}
+}
