@@ -36,7 +36,7 @@ export const useRegisterTenantConfirmation = ({
 		onSuccess: async () => {
 			toast({ variant: 'default', title: 'Email confirmado com sucesso!' });
 			await resetFormDataCookies();
-			router.push('/');
+			router.push('/tenant/payment');
 		},
 		onError: (error: AppError) => {
 			toast({
