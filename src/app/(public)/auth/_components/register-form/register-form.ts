@@ -6,14 +6,10 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { usePasswordInput } from '../../../../../hooks/use-password-input';
 import { registerFormSchema } from './_schemas/register-form.schema';
+import { registerService } from './_services/register.service';
 import type { RegisterFormData } from './_types/register-form-data.type';
-import type { RegisterService } from './_types/register.type';
 
-export type RegisterModelProps = {
-	registerService: RegisterService;
-};
-
-export const useRegisterForm = ({ registerService }: RegisterModelProps) => {
+export const useRegisterForm = () => {
 	const { toast } = useToast();
 
 	const { mutateAsync, isPending } = useMutation({

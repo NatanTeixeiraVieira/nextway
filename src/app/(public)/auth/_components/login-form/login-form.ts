@@ -7,14 +7,10 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { usePasswordInput } from '../../../../../hooks/use-password-input';
 import { loginFormSchema } from './_schemas/login-form.schema';
+import { loginService } from './_services/login.service';
 import type { LoginFormData } from './types/login-form-data.type';
-import type { LoginService } from './types/login.type';
 
-export type LoginModelProps = {
-	loginService: LoginService;
-};
-
-export const useLoginForm = ({ loginService }: LoginModelProps) => {
+export const useLoginForm = () => {
 	const router = useRouter();
 	const { toast } = useToast();
 
