@@ -1,14 +1,12 @@
-import type { RecoverPasswordService } from './_types/recover-password.type';
+import { recoverPasswordService } from './_services/recover-password.service';
 import type { RecoverPasswordParams } from './page';
 
 type RecoverPasswordModelProps = {
 	params: RecoverPasswordParams['params'];
-	recoverPasswordService: RecoverPasswordService;
 };
 
 export const recoverPassword = async ({
 	params,
-	recoverPasswordService,
 }: RecoverPasswordModelProps) => {
 	const { token } = await params;
 
