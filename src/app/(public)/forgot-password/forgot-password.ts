@@ -5,16 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { forgotPasswordSchema } from './_schemas/forgot-password.schema';
+import { forgotPasswordService } from './_services/forgot-password.service';
 import type { ForgotPasswordFormData } from './types/forgot-password-form-data.type';
-import type { ForgotPasswordService } from './types/forgot-password.type';
 
-export type ForgotPasswordModelProps = {
-	forgotPasswordService: ForgotPasswordService;
-};
-
-export const useForgotPassword = ({
-	forgotPasswordService,
-}: ForgotPasswordModelProps) => {
+export const useForgotPassword = () => {
 	const { toast } = useToast();
 	const {
 		register,
