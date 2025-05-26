@@ -1,5 +1,4 @@
-import { activateAccountService } from './_services/activate-account.service';
-import { activateAccount } from './activate-account.model';
+import { activateAccount } from './activate-account';
 
 export type ActivateAccountParams = {
 	params: Promise<{
@@ -10,5 +9,5 @@ export type ActivateAccountParams = {
 export default async function ActivateAccountPage({
 	params,
 }: ActivateAccountParams) {
-	await activateAccount({ params, activateAccountService });
+	await activateAccount({ params });
 }
