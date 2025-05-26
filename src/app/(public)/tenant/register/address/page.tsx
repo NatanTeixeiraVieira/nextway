@@ -1,8 +1,10 @@
 import { getFormDataCookies } from '../_actions/tenant-form-data.action';
-import RegisterTenantVM from './_mvvm/register-tenant-address.vm';
+import RegisterTenantAddressForm from './_components/address-form';
 
 export default async function AddressPage() {
 	const addressFormData = await getFormDataCookies();
 
-	return <RegisterTenantVM addressData={addressFormData?.address ?? null} />;
+	return (
+		<RegisterTenantAddressForm addressData={addressFormData?.address ?? null} />
+	);
 }

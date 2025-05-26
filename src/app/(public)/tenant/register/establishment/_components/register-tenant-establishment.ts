@@ -5,13 +5,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import type { RegisterTenantEstablishmentFormProps } from '.';
 import { setFormDataCookies } from '../../_actions/tenant-form-data.action';
 import { registerTenantEstablishmentSchema } from '../schemas/register-tenant-establishment.schema';
 import type { RegisterTenantEstablishmentFormData } from '../types/register-tenant-establishment-form-data.type';
-import type { RegisterTenantEstablishmentVMProps } from './register-tenant-establishment.vm';
 
 type Props = {
-	establishmentData: RegisterTenantEstablishmentVMProps['formData'];
+	establishmentData: RegisterTenantEstablishmentFormProps['establishmentData'];
 };
 
 export const useRegisterTenantEstablishment = ({

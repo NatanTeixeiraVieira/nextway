@@ -1,22 +1,25 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Input, InputContainer } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import type { useRegisterTenantAddress } from './register-tenant-address.model';
+import type { RegisterTenatFormData } from '../../../_types/register-tenant.type';
+import { useRegisterTenantAddressForm } from './register-tenant-address-form';
 
-type RegisterTenantAddressViewProps = ReturnType<
-	typeof useRegisterTenantAddress
->;
+export type RegisterTenantAddressFormProps = {
+	addressData: RegisterTenatFormData['address'] | null;
+};
 
-export default function RegisterTenantAddressView(
-	props: RegisterTenantAddressViewProps,
-) {
+export default function RegisterTenantAddressForm({
+	addressData,
+}: RegisterTenantAddressFormProps) {
 	const {
 		errors,
 		handleSubmit,
 		handleZipcodeBlur,
 		handleZipcodeChange,
 		register,
-	} = props;
+	} = useRegisterTenantAddressForm({ addressData });
 
 	return (
 		<form onSubmit={handleSubmit} className="space-y-4">

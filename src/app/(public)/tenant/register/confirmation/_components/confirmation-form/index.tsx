@@ -1,5 +1,7 @@
+'use client';
+
 import Spinner from '@/components/spinner';
-import type { useRegisterTenantConfirmation } from './register-tenant-confirmation.model';
+import { useRegisterTenantConfirmation } from './register-tenant-confirmation';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -15,14 +17,15 @@ import {
 	InputOTPSlot,
 } from '@/components/ui/input-otp';
 import { RefreshCw } from 'lucide-react';
+import type { RegisterTenatFormData } from '../../../_types/register-tenant.type';
 
-type RegisterTenantConfirmationViewProps = ReturnType<
-	typeof useRegisterTenantConfirmation
->;
+export type RegisterTenantConfirmationFormProps = {
+	loginData: RegisterTenatFormData['login'] | null;
+};
 
-export default function RegisterTenantConfirmationView(
-	props: RegisterTenantConfirmationViewProps,
-) {
+export default function RegisterTenantConfirmationForm({
+	loginData,
+}: RegisterTenantConfirmationFormProps) {
 	const {
 		form,
 		resendDisabled,
@@ -30,7 +33,7 @@ export default function RegisterTenantConfirmationView(
 		isPending,
 		handleResendCode,
 		handleSubmit,
-	} = props;
+	} = useRegisterTenantConfirmation({ loginData });
 
 	return (
 		<div className="space-y-6">

@@ -1,14 +1,19 @@
+'use client';
+
 import Spinner from '@/components/spinner';
 import { Input, InputContainer } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import ActionButtons from '../../_components/action-buttons';
-import type { useRegisterTenantLogin } from './register-tenant-login.model';
+import ActionButtons from '../../../_components/action-buttons';
+import type { RegisterTenatFormData } from '../../../_types/register-tenant.type';
+import { useRegisterTenantLogin } from './register-tenant-login';
 
-type RegisterTenantLoginViewProps = ReturnType<typeof useRegisterTenantLogin>;
+export type RegisterTenantLoginFormProps = {
+	loginData: RegisterTenatFormData | null;
+};
 
-export default function RegisterTenantLoginView(
-	props: RegisterTenantLoginViewProps,
-) {
+export default function RegisterTenantLoginForm({
+	loginData,
+}: RegisterTenantLoginFormProps) {
 	const {
 		dirtyFields,
 		errors,
@@ -17,7 +22,7 @@ export default function RegisterTenantLoginView(
 		handleIconEyeClick,
 		handleSubmit,
 		register,
-	} = props;
+	} = useRegisterTenantLogin({ loginData });
 
 	return (
 		<form onSubmit={handleSubmit} className="space-y-4">

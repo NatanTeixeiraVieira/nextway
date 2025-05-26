@@ -13,21 +13,17 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { setFormDataCookies } from '../../_actions/tenant-form-data.action';
-import type { RegisterTenantService } from '../../_types/register-tenant.type';
-import { registerTenantLoginSchema } from '../_schemas/register-tenant-login.schema';
-import type { RegisterTenantLoginFormData } from '../_types/register-tenant-address-form-data.type';
-import type { RegisterTenantLoginVMProps } from './register-tenant-login.vm';
+import type { RegisterTenantLoginFormProps } from '.';
+import { setFormDataCookies } from '../../../_actions/tenant-form-data.action';
+import { registerTenantService } from '../../../_services/register-tenant.service';
+import { registerTenantLoginSchema } from '../../_schemas/register-tenant-login.schema';
+import type { RegisterTenantLoginFormData } from '../../_types/register-tenant-address-form-data.type';
 
 type Props = {
-	formData: RegisterTenantLoginVMProps['formData'];
-	registerTenantService: RegisterTenantService;
+	loginData: RegisterTenantLoginFormProps['loginData'];
 };
 
-export const useRegisterTenantLogin = ({
-	formData,
-	registerTenantService,
-}: Props) => {
+export const useRegisterTenantLogin = ({ loginData }: Props) => {
 	const router = useRouter();
 	const { toast } = useToast();
 
@@ -65,39 +61,39 @@ export const useRegisterTenantLogin = ({
 	const { passwordInputType, handleIconEyeClick } = usePasswordInput();
 
 	useEffect(() => {
-		if (formData?.login?.email) {
-			setValue('email', formData.login.email || '');
+		if (loginData?.login?.email) {
+			setValue('email', loginData.login.email || '');
 		}
-	}, [formData?.login?.email, setValue]);
+	}, [loginData?.login?.email, setValue]);
 
 	const handleSubmit = submit(async (data) => {
 		if (
-			!formData?.address ||
-			!formData.responsible ||
-			!formData.establishment
+			!loginData?.address ||
+			!loginData.responsible ||
+			!loginData.establishment
 		) {
 			return;
 		}
 
 		await mutateAsync({
-			zipcode: removeZipcodeMask(formData.address.zipcode),
-			streetName: formData.address.street,
-			neighborhood: formData.address.neighborhood,
-			streetNumber: formData.address.number,
-			complement: formData.address.complement,
+			zipcode: removeZipcodeMask(loginData.address.zipcode),
+			streetName: loginData.address.street,
+			neighborhood: loginData.address.neighborhood,
+			streetNumber: loginData.address.number,
+			complement: loginData.address.complement,
 
-			responsibleName: formData.responsible.name,
-			responsibleCpf: removeCpfMask(formData.responsible.cpf),
+			responsibleName: loginData.responsible.name,
+			responsibleCpf: removeCpfMask(loginData.responsible.cpf),
 			responsiblePhoneNumber: removePhoneNumberMask(
-				formData.responsible.responsiblePhoneNumber,
+				loginData.responsible.responsiblePhoneNumber,
 			),
 
-			cnpj: removeCnpjMask(formData.establishment.cnpj),
-			establishmentName: formData.establishment.establishmentName,
+			cnpj: removeCnpjMask(loginData.establishment.cnpj),
+			establishmentName: loginData.establishment.establishmentName,
 			establishmentPhoneNumber: removePhoneNumberMask(
-				formData.establishment.establishmentPhoneNumber,
+				loginData.establishment.establishmentPhoneNumber,
 			),
-			slug: formData.establishment.slug,
+			slug: loginData.establishment.slug,
 
 			email: data.email,
 			password: data.password,

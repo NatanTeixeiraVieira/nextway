@@ -6,21 +6,17 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { resetFormDataCookies } from '../../_actions/tenant-form-data.action';
-import { registerTenantCofirmationSchema } from '../_schemas/register-tenant-confirmation.schema';
-import type { RegisterTenantConfirmationFormData } from '../_types/register-tenant-confirmation-form-data.type';
-import type { RegisterTenantConfirmationService } from '../_types/register-tenant-confirmation.type';
-import type { RegisterTenantConfirmationVMProps } from './register-tenant-confirmation.vm';
+import type { RegisterTenantConfirmationFormProps } from '.';
+import { resetFormDataCookies } from '../../../_actions/tenant-form-data.action';
+import { registerTenantCofirmationSchema } from '../../_schemas/register-tenant-confirmation.schema';
+import { registerTenantConfirmationService } from '../../_services/activate-account.service';
+import type { RegisterTenantConfirmationFormData } from '../../_types/register-tenant-confirmation-form-data.type';
 
 type Props = {
-	loginData: RegisterTenantConfirmationVMProps['loginData'];
-	registerTenantConfirmationService: RegisterTenantConfirmationService;
+	loginData: RegisterTenantConfirmationFormProps['loginData'];
 };
 
-export const useRegisterTenantConfirmation = ({
-	loginData,
-	registerTenantConfirmationService,
-}: Props) => {
+export const useRegisterTenantConfirmation = ({ loginData }: Props) => {
 	const router = useRouter();
 	const { toast } = useToast();
 
@@ -69,17 +65,10 @@ export const useRegisterTenantConfirmation = ({
 
 		// Simulate API call to resend code
 		await new Promise((resolve) => setTimeout(resolve, 1000));
-
-		// Reset confirmation code
-		// updateFormData({ confirmationCode: ['', '', '', '', '', ''] });
-
-		// Focus first input
-		// if (inputRefs[0]?.current) {
-		// 	inputRefs[0].current?.focus();
-		// }
 	};
 
 	const handleSubmit = form.handleSubmit(async (data) => {
+		console.log('🚀 ~ handleSubmit ~ data:', data);
 		if (!loginData?.email) return;
 
 		await mutateAsync({

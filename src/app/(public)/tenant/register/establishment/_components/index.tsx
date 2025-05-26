@@ -3,15 +3,16 @@
 import { Input, InputContainer } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import ActionButtons from '../../_components/action-buttons';
-import type { useRegisterTenantEstablishment } from './register-tenant-establishment.model';
+import type { RegisterTenatFormData } from '../../_types/register-tenant.type';
+import { useRegisterTenantEstablishment } from './register-tenant-establishment';
 
-type RegisterTenantEstablishmentViewProps = ReturnType<
-	typeof useRegisterTenantEstablishment
->;
+export type RegisterTenantEstablishmentFormProps = {
+	establishmentData: RegisterTenatFormData['establishment'] | null;
+};
 
-export default function RegisterTenantEstablishment(
-	props: RegisterTenantEstablishmentViewProps,
-) {
+export default function RegisterTenantEstablishmentForm({
+	establishmentData,
+}: RegisterTenantEstablishmentFormProps) {
 	const {
 		errors,
 		handleEstablishmentPhoneNumberChange,
@@ -19,7 +20,7 @@ export default function RegisterTenantEstablishment(
 		handleCnpjChange,
 		handleSubmit,
 		register,
-	} = props;
+	} = useRegisterTenantEstablishment({ establishmentData });
 
 	return (
 		<form onSubmit={handleSubmit} className="space-y-4">

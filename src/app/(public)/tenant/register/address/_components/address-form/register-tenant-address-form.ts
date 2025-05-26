@@ -4,20 +4,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { setFormDataCookies } from '../../_actions/tenant-form-data.action';
-import { registerTenantAddressSchema } from '../_schemas/register-tenant-address.schema';
-import type { RegisterTenantAddressFormData } from '../_types/register-tenant-address-form-data.type';
-import type { RegisterTenantVMProps } from './register-tenant-address.vm';
+import type { RegisterTenantAddressFormProps } from '.';
+import { setFormDataCookies } from '../../../_actions/tenant-form-data.action';
+import { registerTenantAddressSchema } from '../../_schemas/register-tenant-address.schema';
+import type { RegisterTenantAddressFormData } from '../../_types/register-tenant-address-form-data.type';
 
 type useRegisterTenantProps = {
-	addressData: RegisterTenantVMProps['addressData'];
+	addressData: RegisterTenantAddressFormProps['addressData'];
 };
 
-export const useRegisterTenantAddress = ({
+export const useRegisterTenantAddressForm = ({
 	addressData,
 }: useRegisterTenantProps) => {
 	const router = useRouter();
-	// const { getFormData, setFormData } = useTenantFormData();
 
 	const {
 		register,

@@ -1,7 +1,7 @@
 import { ErrorConstants } from '@/constants/errors';
 import { AppError } from '@/errors/error';
 import { getFormDataCookies } from '../_actions/tenant-form-data.action';
-import RegisterTenantConfirmationVM from './_mvvm/register-tenant-confirmation.vm';
+import RegisterTenantConfirmationForm from './_components/confirmation-form';
 
 export default async function ConfirmationPage() {
 	const registerTenantFormData = await getFormDataCookies();
@@ -11,6 +11,6 @@ export default async function ConfirmationPage() {
 	}
 
 	return (
-		<RegisterTenantConfirmationVM loginData={registerTenantFormData.login} />
+		<RegisterTenantConfirmationForm loginData={registerTenantFormData.login} />
 	);
 }

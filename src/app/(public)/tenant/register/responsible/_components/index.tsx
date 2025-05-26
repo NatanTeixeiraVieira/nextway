@@ -1,22 +1,25 @@
+'use client';
+
 import { Input, InputContainer } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import ActionButtons from '../../_components/action-buttons';
-import type { useRegisterTenantResponsible } from './register-tenant-responsible.model';
+import type { RegisterTenatFormData } from '../../_types/register-tenant.type';
+import { useRegisterTenantResponsible } from './register-tenant-responsible';
 
-type RegisterTenantResponsibleViewProps = ReturnType<
-	typeof useRegisterTenantResponsible
->;
+export type RegisterTenantResponsibleFormProps = {
+	responsibleData: RegisterTenatFormData['responsible'] | null;
+};
 
-export default function RegisterTenantResponsibleView(
-	props: RegisterTenantResponsibleViewProps,
-) {
+export default function RegisterTenantResponsibleForm({
+	responsibleData,
+}: RegisterTenantResponsibleFormProps) {
 	const {
 		errors,
 		handleCpfChange,
 		handleResponsiblePhoneNumberChange,
 		handleSubmit,
 		register,
-	} = props;
+	} = useRegisterTenantResponsible({ responsibleData });
 
 	return (
 		<form onSubmit={handleSubmit} className="space-y-4">

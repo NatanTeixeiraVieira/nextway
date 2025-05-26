@@ -3,13 +3,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import type { RegisterTenantResponsibleFormProps } from '.';
 import { setFormDataCookies } from '../../_actions/tenant-form-data.action';
 import { registerTenantResponsibleSchema } from '../_schemas/register-tenant-responsible.schema';
 import type { RegisterTenantResponsibleFormData } from '../_types/register-tenant-responsible-form-data.type';
-import type { RegisterTenantResponsibleVMProps } from './register-tenant-responsible.vm';
 
 type Props = {
-	responsibleData: RegisterTenantResponsibleVMProps['formData'];
+	responsibleData: RegisterTenantResponsibleFormProps['responsibleData'];
 };
 
 export const useRegisterTenantResponsible = ({ responsibleData }: Props) => {
